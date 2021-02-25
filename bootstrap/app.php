@@ -61,6 +61,9 @@ $app->singleton(
 
 $app->configure('app');
 
+//jwt config
+$app->configure('jwt');
+
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
