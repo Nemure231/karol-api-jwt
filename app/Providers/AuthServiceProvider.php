@@ -35,5 +35,17 @@ class AuthServiceProvider extends ServiceProvider
                 return User::where('api_token', $request->input('api_token'))->first();
             }
         });
+
+        // $this->app['auth']->viaRequest('api', function ($request) {
+        //     //awalnya header ini input, tapi dirubah jadi header karena masukin api tokennya harus di header postman
+        //     ///lalu Authorization tadinya api_token
+        //     if ($request->header('Authorization')) {
+        //         //explode digunakan untuk memotong bagian kosong pada vaule di header postman
+        //         //proses explode juga akan mengubahnya menjadi type data array
+        //         $api_token = explode(' ', $request->header('Authorization'));
+        //         ///index 1 diberikan karena index 0 adalah index parent merupakan 0, dan index 1 adalah index yang terdapat datanya
+        //         return User::where('api_token', $api_token[0])->first();
+        //     }
+        // });
     }
 }

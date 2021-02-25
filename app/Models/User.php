@@ -3,17 +3,16 @@
 namespace App\Models;
 
 use Illuminate\Auth\Authenticatable;
+use Laravel\Lumen\Auth\Authorizable;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Laravel\Lumen\Auth\Authorizable;
-use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
-class User extends Model implements AuthenticatableContract, AuthorizableContract
+class User extends Model implements AuthenticatableContract, AuthorizableContract, JWTSubject
 {
-    use Authenticatable, Authorizable, HasFactory, Notifiable;
+    use Authenticatable, Authorizable, HasFactory;
 
     /**
      * The attributes that are mass assignable.
@@ -24,6 +23,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
         'name', 'email', 'password'
     ];
 
+    
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -32,6 +33,8 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         'password',
     ];
+
+    // protected $primaryKey = 'id';
 
     public function getJWTIdentifier()
     {
@@ -47,4 +50,14 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     {
         return [];
     }
+    
+
+    // public function getAuthIdentifierName(){ 
+    //     return $this->id; 
+    // } 
+        
+    // public function getAuthIdentifier(){ 
+    //     return $this->{$this->getAuthIdentifierName()}; 
+    // }
+
 }
