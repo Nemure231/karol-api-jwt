@@ -22,7 +22,7 @@ class AuthController extends Controller
  
     public function register(Request $request){
         //melakukan validasi
-        Validator::make($request->all(), [
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
@@ -35,7 +35,11 @@ class AuthController extends Controller
             'email.unique' => 'Email itu sudah ada',
             'password.required' => 'Password harus diisi',
             'password.confirmed' => 'Konfirmasi password harus sama!'
-        ])->validate();
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }        
 
         //mengambil inputan untuk dimasukkan ke database
         $register = User::create([
@@ -60,29 +64,29 @@ class AuthController extends Controller
     
     }
 
-    public function login()
+    public function login(Request $request)
     {
-        // Validator::make($request->all(), [
-        //     'email' => 'required|email',
-        //     'password' => 'required|string',
-        // ],[
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ],[
 
-        //     'email.required' => 'Email harus diisi!',
-        //     'email.email' => 'Harus berformat email!',
-        //     'password.required' => 'Password harus diisi!',
-        //     'password.string' => 'Harus berformat string!'
-        // ])->validate();
+            'email.required' => 'Email harus diisi!',
+            'email.email' => 'Harus berformat email!',
+            'password.required' => 'Password harus diisi!',
+            'password.string' => 'Harus berformat string!'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json($validator->errors(), 422);
+        }
 
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
-        // Get some user from somewhere
-        $user = User::first();
 
-        // Get the token
-        $token = auth()->login($user);
         return $this->respondWithToken($token);
     }
 
