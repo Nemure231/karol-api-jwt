@@ -95,6 +95,13 @@ class AuthController extends Controller
         return response()->json(auth()->user());
     }
 
+    public function ambil_token(){
+
+        $id_user = auth()->user()->id;
+
+        return response()->json(auth()->tokenById($id_user));
+    }
+
     /**
      * Log the user out (Invalidate the token).
      *
