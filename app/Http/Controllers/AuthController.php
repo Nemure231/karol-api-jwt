@@ -22,30 +22,35 @@ class AuthController extends Controller
  
     public function register(Request $request){
         //melakukan validasi
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
-            'email' => 'required|email|unique:users',
-            'password' => 'required|confirmed',
-        ],[
+        // $validator = Validator::make($request->all(), [
+        //     'name' => 'required|string',
+        //     'email' => 'required|email|unique:users',
+        //     'password' => 'required|confirmed',
+        // ],[
 
-            'name.required' => 'Harus dipilih!',
-            'name.string' => 'Nama itu sudah ada!',
-            'email.required' => 'Email harus diisi',
-            'email.email' => 'Harus berformat email',
-            'email.unique' => 'Email itu sudah ada',
-            'password.required' => 'Password harus diisi',
-            'password.confirmed' => 'Konfirmasi password harus sama!'
-        ]);
+        //     'name.required' => 'Harus dipilih!',
+        //     'name.string' => 'Nama itu sudah ada!',
+        //     'email.required' => 'Email harus diisi',
+        //     'email.email' => 'Harus berformat email',
+        //     'email.unique' => 'Email itu sudah ada',
+        //     'password.required' => 'Password harus diisi',
+        //     'password.confirmed' => 'Konfirmasi password harus sama!'
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }        
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 422);
+        // }        
 
         //mengambil inputan untuk dimasukkan ke database
         $register = User::create([
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
+            'telepon' => $request->input('telepon'),
+            'alamat' => $request->input('alamat'),
+            'gambar' => $request->input('gambar'),
+            'role_id' => $request->input('role_id'),
+            'status' => $request->input('status')
         ]);
         //melakukan kondisi jika user berhasil terdaftar
         if($register){
@@ -66,20 +71,20 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required|string',
-        ],[
+        // $validator = Validator::make($request->all(), [
+        //     'email' => 'required|email',
+        //     'password' => 'required|string',
+        // ],[
 
-            'email.required' => 'Email harus diisi!',
-            'email.email' => 'Harus berformat email!',
-            'password.required' => 'Password harus diisi!',
-            'password.string' => 'Harus berformat string!'
-        ]);
+        //     'email.required' => 'Email harus diisi!',
+        //     'email.email' => 'Harus berformat email!',
+        //     'password.required' => 'Password harus diisi!',
+        //     'password.string' => 'Harus berformat string!'
+        // ]);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors(), 422);
-        }
+        // if ($validator->fails()) {
+        //     return response()->json($validator->errors(), 422);
+        // }
 
         $credentials = request(['email', 'password']);
 
