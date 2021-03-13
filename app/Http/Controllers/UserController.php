@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 use  App\Models\User;
 
 class UserController extends Controller
@@ -22,52 +23,25 @@ class UserController extends Controller
      *
      * @return Response
      */
-    public function profile()
-    {
-        return response()->json(['user' => Auth::user()], 200);
-    }
 
-    /**
-     * Get all User.
-     *
-     * @return Response
-     */
-    public function allUsers()
-    {
-         return response()->json(['users' =>  User::all()], 200);
-    }
+    public function ambilSatuUserJoinRole($id){
 
-    /**
-     * Get one user.
-     *
-     * @return Response
-     */
-    public function singleUser($id)
-    {
-        try {
-            $user = User::findOrFail($id);
-
-            return response()->json(['user' => $user], 200);
-
-        } catch (\Exception $e) {
-
-            return response()->json(['message' => 'user not found!'], 404);
-        }
-
-    }
-
-    public function ambilSatuUser(){
-        $id = $request->input('id');
-
-        $where = [
-        'id' => $id
-        ];
-
-        $data =  User::select('nama', 'telepon', 'email', 'gambar', 'alamat', 'role_id')
-            ->where($where)
-            ->get();
+        $data =  User::select('name', 'telepon', 'email', 'gambar', 'alamat', 'nama_role')
+            ->join('role', 'users.role_id', '=', 'role.id_role')
+            ->where('id', $id)
+            ->first();
 
         return response()->json(['users' =>  $data], 200);
     }
+
+    public function ambilSatuUser($id){
+
+        $data =  User::select('name', 'telepon', 'email', 'gambar', 'alamat')
+            ->where('id', $id)
+            ->first();
+
+        return response()->json(['users' =>  $data], 200);
+    }
+
 
 }

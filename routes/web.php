@@ -28,7 +28,8 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->get('auth/ambil_token', 'AuthController@ambil_token');
     $router->get('auth/me', 'AuthController@me');
 
+
     $router->get('profile', 'UserController@profile');
-    
-    $router->get('akun/profil', 'UserController@ambilSatuUser');
+    $router->get('akun/profil/{id}', 'UserController@ambilSatuUser');
+    $router->get('akun/profil/dengan-role/{id}', 'UserController@ambilSatuUserJoinRole');
 });
