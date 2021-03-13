@@ -24,7 +24,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
     $router->post('auth/register', 'AuthController@register');
     $router->post('auth/login', 'AuthController@login');
-    $router->get('auth/logout', 'AuthController@logout');
+    $router->post('auth/logout', 'AuthController@logout');
     $router->get('auth/ambil_token', 'AuthController@ambil_token');
     $router->get('auth/me', 'AuthController@me');
 
