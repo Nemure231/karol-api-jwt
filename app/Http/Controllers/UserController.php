@@ -56,8 +56,18 @@ class UserController extends Controller
 
     }
 
-    // public function ambilSatuUser(){
-    //     User::select()
-    // }
+    public function ambilSatuUser(){
+        $id = $request->input('id');
+
+        $where = [
+        'id' => $id
+        ];
+
+        $data =  User::select('nama', 'telepon', 'email', 'gambar', 'alamat', 'role_id')
+            ->where($where)
+            ->get();
+
+        return response()->json(['users' =>  $data], 200);
+    }
 
 }

@@ -29,4 +29,6 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->get('auth/me', 'AuthController@me');
 
     $router->get('profile', 'UserController@profile');
+    
+    $router->get('akun/profil', 'UserController@ambilSatuUser');
 });
