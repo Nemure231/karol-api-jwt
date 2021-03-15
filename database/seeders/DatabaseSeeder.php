@@ -16,6 +16,9 @@ class DatabaseSeeder extends Seeder
         $this->call([
             // TableRole::class,
             // TableMenu::class
+            // TableMenuUtama::class
+            // TableAksesMenu::class
+            TableSubmenu::class
         ]);
     }
 }
