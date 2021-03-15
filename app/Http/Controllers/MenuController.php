@@ -25,6 +25,16 @@ class MenuController extends Controller
      * @return Response
      */
 
+    public function ambilMenuUntukSidebar($id){
+        $data = Menu::join('akses_menu', 'menu.id_menu', '=', 'akses_menu.menu_id')
+        ->select('id_menu', 'nama_menu')
+        ->where('role_id', $id)
+        ->orderBy('akses_menu.menu_id', 'asc')
+        ->orderBy('akses_menu.role_id', 'asc')
+        ->get();
+        return response()->json(['data' =>  $data], 200);
+    }
+
     public function ambilMenu($id){
 
         $data =  User::select('name', 'telepon', 'email', 'gambar', 'alamat')

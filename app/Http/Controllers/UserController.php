@@ -31,7 +31,7 @@ class UserController extends Controller
             ->join('role', 'users.role_id', '=', 'role.id_role')
             ->where('id', $id)
             ->first();
-        return response()->json(['users' =>  $data], 200);
+        return response()->json(['data' =>  $data], 200);
     }
 
     public function ambilSatuUser($id){
@@ -40,7 +40,7 @@ class UserController extends Controller
             ->where('id', $id)
             ->first();
 
-        return response()->json(['users' =>  $data], 200);
+        return response()->json(['data' =>  $data], 200);
     }
 
     public function ambilSatuUserUntukProfil($id){
@@ -49,7 +49,7 @@ class UserController extends Controller
             ->where('id', $id)
             ->first();
 
-        return response()->json(['users' =>  $data], 200);
+        return response()->json(['data' =>  $data], 200);
     }
 
     public function ubahUser(Request $request, $id){
@@ -80,7 +80,7 @@ class UserController extends Controller
         $data =  User::select('password')
             ->where('id', $id)
             ->first();
-        return response()->json(['users' =>  $data], 200);
+        return response()->json(['data' =>  $data], 200);
     }
 
     public function ubahSandi(Request $request, $id){
