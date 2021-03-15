@@ -29,7 +29,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->get('auth/me', 'AuthController@me');
 
 
-    $router->get('profile', 'UserController@profile');
-    $router->get('akun/profil/{id}', 'UserController@ambilSatuUser');
-    $router->get('akun/profil/dengan-role/{id}', 'UserController@ambilSatuUserJoinRole');
+    $router->get('akun/profil/{id}', 'UserController@AmbilSatuUser');
+    $router->get('akun/profil/dengan-role/{id}', 'UserController@AmbilSatuUserJoinRole');
+
+    $router->put('akun/profil/ubah/{id}', 'UserController@UbahUser');
+
 });
