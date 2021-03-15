@@ -30,8 +30,8 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
 
     $router->get('akun/profil/{id}', 'UserController@AmbilSatuUser');
+    $router->get('akun/profil/untuk-profil/{id}', 'UserController@AmbilSatuUserUntukProfil');
     $router->get('akun/profil/dengan-role/{id}', 'UserController@AmbilSatuUserJoinRole');
-
     $router->put('akun/profil/ubah/{id}', 'UserController@UbahUser');
 
 });

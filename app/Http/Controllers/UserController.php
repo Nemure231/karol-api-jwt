@@ -42,6 +42,15 @@ class UserController extends Controller
         return response()->json(['users' =>  $data], 200);
     }
 
+    public function AmbilSatuUserUntukProfil($id){
+
+        $data =  User::select('name', 'gambar')
+            ->where('id', $id)
+            ->first();
+
+        return response()->json(['users' =>  $data], 200);
+    }
+
     public function UbahUser(Request $request, $id){
 
         $model = User::find($id);
