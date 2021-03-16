@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use  App\Models\Menu;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
 class MenuController extends Controller
@@ -57,6 +58,19 @@ class MenuController extends Controller
 
     public function tambahMenu(Request $request){
 
+        $validator = Validator::make($request->all(), [
+            'nama_menu' => 'required|string|unique:menu,nama_menu'
+        ],[
+
+            'nama_menu.required' => 'Menu harus diisi!',
+            'nama_menu.string' => 'Menu harus bertipe string!',
+            'nama_menu.unique' => 'Menu itu sudah ada'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['data' => $validator->errors()], 422);
+        }       
+
         $model = new Menu;
         $model->nama_menu = $request->nama_menu;
         $model->save();
@@ -70,7 +84,7 @@ class MenuController extends Controller
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu berhasil ditambahkan!',
+                'message' => 'Menu gagal ditambahkan!',
                 'data' => '',
             ], 400);
         }
