@@ -32,36 +32,45 @@ class MenuController extends Controller
         ->orderBy('akses_menu.menu_id', 'asc')
         ->orderBy('akses_menu.role_id', 'asc')
         ->get();
-        return response()->json(['data' =>  $data], 200);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Menu barhasil ditemukan!',
+            'data' => $data
+        ], 200);
     }
 
-    public function ambilMenu($id){
+    public function ambilMenu($id = null){
 
-        $data =  User::select('name', 'telepon', 'email', 'gambar', 'alamat')
-            ->where('id', $id)
-            ->first();
+        if($id == null){
+            $data =  Menu::select('id_menu', 'nama_menu')->get();
+        }else{
+            $data = Menu::select('id_menu', 'nama_menu')->where('id_menu', $id)->get();
+        }
 
-        return response()->json(['users' =>  $data], 200);
+        return response()->json([
+                'success' => true,
+                'message' => 'Menu barhasil ditemukan!',
+                'data' => $data
+        ], 200);
     }
 
     public function tambahMenu(Request $request){
 
-        $model = User::find($id);
-        $model->name = $request->input('name');
-        $model->telepon = $request->input('telepon');
-        $model->alamat = $request->input('alamat');
+        $model = new Menu;
+        $model->nama_menu = $request->nama_menu;
         $model->save();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'User berhasil diubah!',
+                'message' => 'Menu berhasil ditambahkan!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'User gagal diubahh!',
+                'message' => 'Menu berhasil ditambahkan!',
                 'data' => '',
             ], 400);
         }
@@ -70,46 +79,41 @@ class MenuController extends Controller
 
     public function ubahMenu(Request $request, $id){
 
-        $model = User::find($id);
-        $model->name = $request->input('name');
-        $model->telepon = $request->input('telepon');
-        $model->alamat = $request->input('alamat');
+        $model = Menu::find($id);
+        $model->nama_menu = $request->nama_menu;
         $model->save();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'User berhasil diubah!',
+                'message' => 'Menu berhasil diubah!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'User gagal diubahh!',
+                'message' => 'Menu gagal diubah!',
                 'data' => '',
             ], 400);
         }
 
     }
 
-    public function hapusMenu(Request $request, $id){
+    public function hapusMenu($id){
 
-        $model = User::find($id);
-        $model->name = $request->input('name');
-        $model->telepon = $request->input('telepon');
-        $model->alamat = $request->input('alamat');
-        $model->save();
+        $model = Menu::find($id);
+        $model->delete();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'User berhasil diubah!',
+                'message' => 'Menu berhasil dihapus!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'User gagal diubahh!',
+                'message' => 'Menu gagal dihapus!',
                 'data' => '',
             ], 400);
         }
