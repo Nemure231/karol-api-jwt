@@ -41,8 +41,8 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->get('pengaturan/menu', 'MenuController@ambilMenu');
     $router->get('pengaturan/menu/{id}', 'MenuController@ambilMenu');
     $router->post('pengaturan/menu/tambah', 'MenuController@tambahMenu');
-    $router->put('pengaturan/menu/ubah', 'MenuController@ubahMenu');
-    $router->delete('pengaturan/menu/hapus', 'MenuController@hapusMenu');
+    $router->put('pengaturan/menu/ubah/{id}', 'MenuController@ubahMenu');
+    $router->delete('pengaturan/menu/hapus/{id}', 'MenuController@hapusMenu');
 
 
 });
