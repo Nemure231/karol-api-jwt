@@ -41,13 +41,9 @@ class MenuController extends Controller
         ], 200);
     }
 
-    public function ambilMenu($id = null){
+    public function ambilMenu(){
 
-        if($id == null){
-            $data =  Menu::select('id_menu', 'nama_menu')->get();
-        }else{
-            $data = Menu::select('id_menu', 'nama_menu')->where('id_menu', $id)->get();
-        }
+        $data =  Menu::select('id_menu', 'nama_menu')->get();
 
         return response()->json([
                 'success' => true,
@@ -56,8 +52,30 @@ class MenuController extends Controller
         ], 200);
     }
 
-    public function tambahMenu(Request $request){
+    public function tambahMenuDariSubmenu(Request $request){
 
+        $validator = Validator::make($request->all(), [
+            'nama_menu' => 'required',
+        ],[
+            'nama_menu.required' => 'Nama menu harus dipilih!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json(['data' => $validator->errors()], 422);
+        }
+
+        $menu_id = $request->nama_menu;
+        $data = Menu::insertGetId(['nama_menu' => $menu_id]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Menu barhasil ditambahkan!',
+            'data' => $data
+        ], 200);
+
+    }
+
+    public function tambahMenu(Request $request){
 
         $validator = Validator::make($request->all(), [
             'nama_menu' => 'required|string|unique:menu,nama_menu'

@@ -43,6 +43,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->post('pengaturan/menu/tambah', 'MenuController@tambahMenu');
     $router->put('pengaturan/menu/ubah/{id}', 'MenuController@ubahMenu');
     $router->delete('pengaturan/menu/hapus/{id}', 'MenuController@hapusMenu');
+    $router->post('pengaturan/menu/tambah/dari-submenu', 'MenuController@tambahMenuDariSubmenu');
+
+
 
     $router->get('pengaturan/submenu/untuk-sidebar/{menu_id}/{menu_utama_id}', 'SubmenuController@ambilSubmenuUntukSidebar');
     $router->get('pengaturan/submenu', 'SubmenuController@ambilSubmenu');
@@ -50,5 +53,6 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->put('pengaturan/submenu/ubah/{id}', 'SubmenuController@ubahSubmenu');
     $router->delete('pengaturan/submenu/hapus/{id}', 'SubmenuController@hapusSubmenu');
 
+    $router->post('pengaturan/menu_utama/tambah/dari-submenu', 'MenuUtamaController@tambahMenuUtamaDariSubmenu');
 
 });

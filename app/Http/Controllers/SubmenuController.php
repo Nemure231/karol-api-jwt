@@ -56,36 +56,55 @@ class SubmenuController extends Controller
         ], 200);
     }
 
-    public function tambahMenu(Request $request){
-
+    public function tambahSubmenu(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' => 'required|string|unique:menu,nama_menu'
-        ],[
+            'nama_submenu' => 'required|string|unique:submenu,nama_submenu',
+            'url_submenu' => 'required|unique:submenu,url_submenu',
+            'ikon_submenu' => 'required',
+            'menu_id' => 'required',
+            'menu_utama_id' => 'required'
 
-            'nama_menu.required' => 'Menu harus diisi!',
-            'nama_menu.string' => 'Menu harus bertipe string!',
-            'nama_menu.unique' => 'Menu itu sudah ada!'
+        ],[
+            'nama_submenu.required' => 'Nama submenu harus diisi!',
+            'nama_submenu.string' => 'Nama submenu harus bertipe string!',
+            'nama_submenu.unique' => 'Nama submenu itu sudah ada!',
+            'url_submenu.required' => 'Url submenu harus diisi!',
+            'url_submenu.unique' => 'Url submenu itu sudah ada!',
+            'ikon_submenu.required' => 'Ikon submenu harus diisi!',
+            'menu_id.required' => 'Nama menu harus dipilih!',
+            'menu_utama_id.required' => 'Nama menu utama harus dipilih!'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['data' => $validator->errors()], 422);
-        }       
+        }
 
-        $model = new Menu;
-        $model->nama_menu = $request->nama_menu;
+        // $status_menu = $request->status_submenu;
+
+        // if(!$status_menu){
+        //     $status_menu = 2;
+        // }
+
+        $model = new Submenu;
+        $model->menu_id = $request->menu_id;
+        $model->menu_utama_id = $request->menu_utama_id;
+        $model->nama_submenu = $request->nama_submenu;
+        $model->url_submenu = $request->url_submenu;
+        $model->ikon_submenu = $request->ikon_submenu;
+        $model->status_submenu = $request->status_submenu;
         $model->save();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'Menu berhasil ditambahkan!',
+                'message' => 'Submenu berhasil ditambahkan!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal ditambahkan!',
+                'message' => 'Submenu gagal ditambahkan!',
                 'data' => '',
             ], 400);
         }
