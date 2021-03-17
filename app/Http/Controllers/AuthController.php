@@ -21,7 +21,6 @@ class AuthController extends Controller
     }
  
     public function register(Request $request){
-        //melakukan validasi
         // $validator = Validator::make($request->all(), [
         //     'name' => 'required|string',
         //     'email' => 'required|email|unique:users',
@@ -38,7 +37,7 @@ class AuthController extends Controller
         // ]);
 
         // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 422);
+        //     return response()->json(['data' => $validator->errors()], 422);
         // }        
 
         //mengambil inputan untuk dimasukkan ke database
@@ -71,29 +70,39 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'email' => 'required|email',
-        //     'password' => 'required|string',
-        // ],[
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'password' => 'required|string',
+        ],[
 
-        //     'email.required' => 'Email harus diisi!',
-        //     'email.email' => 'Harus berformat email!',
-        //     'password.required' => 'Password harus diisi!',
-        //     'password.string' => 'Harus berformat string!'
-        // ]);
+            'email.required' => 'Email harus diisi!',
+            'email.email' => 'Harus berformat email!',
+            'password.required' => 'Password harus diisi!',
+            'password.string' => 'Harus berformat string!'
+        ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json($validator->errors(), 422);
-        // }
+        if ($validator->fails()) {
+            return response()->json(['data' => $validator->errors()], 422);
+        }
 
         $credentials = request(['email', 'password']);
 
-        if (! $token = auth()->attempt($credentials)) {
-            return response()->json(['error' => 'Unauthorized'], 401);
+        if (!$token = auth()->attempt($credentials)) {
+            return response()->json(
+                ['data' => 
+                    ['error' => 'Unauthorized']
+                ], 401);
         }
 
         return $this->respondWithToken($token);
     }
+
+
+
+
+
+
+    
 
     public function me()
     {
