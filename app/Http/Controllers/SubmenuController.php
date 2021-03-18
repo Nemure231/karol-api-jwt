@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Submenu;
+use App\Models\Menu;
+use App\Models\MenuUtama;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -90,18 +92,31 @@ class SubmenuController extends Controller
             // dd($validator->errors());
         }
 
-        // $status_menu = $request->status_submenu;
+        $menu_id = $request->menu_id;
+        if (Menu::where('nama_menu', $menu_id)->doesntExist()) {
+            $id_menu = Menu::insertGetId(['nama_menu' => $menu_id]);
+        }else{
+            $id_menu = $menu_id;
+        }
 
-        // if(!$status_menu){
-        //     $status_menu = 2;
-        // }
+        $ikon = $request->ikon_submenu;
+        $menu_utama_id = $request->menu_utama_id;
+        if (MenuUtama::where('nama_menu_utama', $menu_utama_id)->doesntExist()) {
+            $id_menu_utama = MenuUtama::insertGetId([
+                'menu_id' => $id_menu,
+                'nama_menu_utama' => $menu_utama_id, 
+                'ikon_menu_utama' => $ikon
+            ]);
+        }else{
+            $id_menu_utama = $menu_utama_id;
+        }
 
         $model = new Submenu;
-        $model->menu_id = $request->menu_id;
-        $model->menu_utama_id = $request->menu_utama_id;
+        $model->menu_id = $id_menu;
+        $model->menu_utama_id = $id_menu_utama;
         $model->nama_submenu = $request->nama_submenu;
         $model->url_submenu = $request->url_submenu;
-        $model->ikon_submenu = $request->ikon_submenu;
+        $model->ikon_submenu = $ikon;
         $model->status_submenu = $request->status_submenu;
         $model->save();
 
@@ -119,72 +134,91 @@ class SubmenuController extends Controller
             ], 400);
         }
     }
-
-    public function ubahMenu(Request $request, $id){
-
-        $old =  $request->old('nama_menu');
-        $baru = $request->input('nama_menu');
     
-        
-        if($old != null){
-            $rules =  'required|string|unique:menu,nama_menu';
-        }else{
-            $rules = 'required|string';
-        }
+
+    public function ubahSubmenu(Request $request, $id){
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' =>  $rules
-        ],[
+            'nama_submenu' => 'required|string|unique:submenu,nama_submenu,'.$id.',id_submenu',
+            'url_submenu' => 'required|unique:submenu,url_submenu,'.$id.',id_submenu',
+            'ikon_submenu' => 'required',
+            'menu_id' => 'required',
+            'menu_utama_id' => 'required'
 
-            'nama_menu.required' => 'Menu harus diisi!',
-            'nama_menu.string' => 'Menu harus bertipe string!',
-            'nama_menu.unique' => 'Menu itu sudah ada!'
+        ],[
+            'nama_submenu.required' => 'Nama submenu harus diisi!',
+            'nama_submenu.string' => 'Nama submenu harus bertipe string!',
+            'nama_submenu.unique' => 'Nama submenu itu sudah ada!',
+            'url_submenu.required' => 'Url submenu harus diisi!',
+            'url_submenu.unique' => 'Url submenu itu sudah ada!',
+            'ikon_submenu.required' => 'Ikon submenu harus diisi!',
+            'menu_id.required' => 'Nama menu harus dipilih!',
+            'menu_utama_id.required' => 'Nama menu utama harus dipilih!'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()], 422);
-        }  
+            return response()->json(['data' => $validator->errors()->all()], 422);
+        }
 
-        $model = Menu::find($id);
-        $model->nama_menu = $request->nama_menu;
+        $menu_id = $request->menu_id;
+        if (is_numeric($menu_id)){
+            $id_menu = $menu_id;
+        }else{
+            $id_menu = Menu::insertGetId(['nama_menu' => $menu_id]);
+        }
+        
+        $ikon = $request->ikon_submenu;
+        $menu_utama_id = $request->menu_utama_id;
+        if (is_numeric($menu_utama_id)){
+            $id_menu_utama = $menu_utama_id;
+        }else{
+            $id_menu_utama = MenuUtama::insertGetId([
+                'menu_id' => $id_menu,
+                'nama_menu_utama' => $menu_utama_id, 
+                'ikon_menu_utama' => $ikon
+            ]);
+        }
+
+        $model = Submenu::find($id);
+        $model->menu_id = $id_menu;
+        $model->menu_utama_id = $id_menu_utama;
+        $model->nama_submenu = $request->nama_submenu;
+        $model->url_submenu = $request->url_submenu;
+        $model->ikon_submenu = $ikon;
+        $model->status_submenu = $request->status_submenu;
         $model->save();
-
-        // Menu::where('id_menu', $id)->updateOrInsert(
-        //     ['nama_menu' => $request->nama_menu],
-        //     ['nama_menu' => $request->nama_menu]
-        // );
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'Menu berhasil diubah!',
+                'message' => 'Submenu berhasil diubah!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal diubah!',
+                'message' => 'Submenu gagal diubah!',
                 'data' => '',
             ], 400);
         }
-
     }
 
-    public function hapusMenu($id){
 
-        $model = Menu::find($id);
+    public function hapusSubmenu($id){
+
+        $model = Submenu::find($id);
         $model->delete();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'Menu berhasil dihapus!',
+                'message' => 'Submenu berhasil dihapus!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal dihapus!',
+                'message' => 'Submenu gagal dihapus!',
                 'data' => '',
             ], 400);
         }

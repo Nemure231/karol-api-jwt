@@ -111,20 +111,10 @@ class MenuController extends Controller
 
     public function ubahMenu(Request $request, $id){
 
-        $old =  $request->old('nama_menu');
-        $baru = $request->input('nama_menu');
-    
-        
-        if($old != null){
-            $rules =  'required|string|unique:menu,nama_menu';
-        }else{
-            $rules = 'required|string';
-        }
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' =>  $rules
+            'nama_menu' =>  'required|string|unique:menu,nama_menu,'.$id.',id_menu'
         ],[
-
             'nama_menu.required' => 'Menu harus diisi!',
             'nama_menu.string' => 'Menu harus bertipe string!',
             'nama_menu.unique' => 'Menu itu sudah ada!'
@@ -132,16 +122,11 @@ class MenuController extends Controller
 
         if ($validator->fails()) {
             return response()->json(['data' => $validator->errors()], 422);
-        }  
+        }
 
         $model = Menu::find($id);
         $model->nama_menu = $request->nama_menu;
         $model->save();
-
-        // Menu::where('id_menu', $id)->updateOrInsert(
-        //     ['nama_menu' => $request->nama_menu],
-        //     ['nama_menu' => $request->nama_menu]
-        // );
 
         if($model){
             return response()->json([
