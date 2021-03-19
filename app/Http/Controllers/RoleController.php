@@ -40,6 +40,18 @@ class RoleController extends Controller
         ], 200);
     }
 
+    public function ambilRoleUntukCekCentangAksesRole($id){
+        $data = Role::where('id_role', $id)
+                ->select('id_role', 'nama_role')
+                ->first();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Role barhasil ditemukan!',
+            'data' => $data
+        ], 200);
+    }
+
     public function tambahRole(Request $request){
 
         $validator = Validator::make($request->all(), [

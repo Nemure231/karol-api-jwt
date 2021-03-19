@@ -13,8 +13,8 @@ class CreateAksesMenuTable extends Migration
      */
     public function up()
     {
-        Schema::create('akses_menu', function (Blueprint $table) {
-            $table->increments('id_akses_menu');
+        Schema::create('akses_role', function (Blueprint $table) {
+            $table->increments('id_akses_role');
             $table->integer('menu_id')->length('3')->index();
             $table->integer('role_id')->length('3')->index();
             $table->timestamps();

@@ -27,12 +27,25 @@ class MenuController extends Controller
      */
 
     public function ambilMenuUntukSidebar($id){
-        $data = Menu::join('akses_menu', 'menu.id_menu', '=', 'akses_menu.menu_id')
+        $data = Menu::join('akses_role', 'menu.id_menu', '=', 'akses_role.menu_id')
         ->select('id_menu', 'nama_menu')
         ->where('role_id', $id)
-        ->orderBy('akses_menu.menu_id', 'asc')
-        ->orderBy('akses_menu.role_id', 'asc')
+        ->orderBy('akses_role.menu_id', 'asc')
+        ->orderBy('akses_role.role_id', 'asc')
         ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Menu barhasil ditemukan!',
+            'data' => $data
+        ], 200);
+    }
+
+    public function ambilMenuUntukDaftarRoleAkses(){
+        $data = Menu::where([
+                ['id_menu', '!=', '1'],
+                ['nama_menu', '!=', 'Role'],
+            ])->select('id_menu', 'nama_menu')->get();
 
         return response()->json([
             'success' => true,

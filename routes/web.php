@@ -45,6 +45,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->group(['prefix' => 'pengaturan'], function () use ($router){
 
         $router->get('menu/untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
+        $router->get('menu/untuk-role-akses', 'MenuController@ambilMenuUntukDaftarRoleAkses');
         $router->get('menu', 'MenuController@ambilMenu');
         $router->post('menu/tambah', 'MenuController@tambahMenu');
         $router->put('menu/ubah/{id}', 'MenuController@ubahMenu');
@@ -55,6 +56,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
         $router->post('menu_utama/tambah', 'MenuUtamaController@tambahMenuUtama');
         $router->put('menu_utama/ubah/{id}', 'MenuUtamaController@ubahMenuUtama');
         $router->delete('menu_utama/hapus/{id}', 'MenuUtamaController@hapusMenuUtama');
+        
 
         $router->get('submenu/untuk-sidebar/{menu_id}/{menu_utama_id}', 'SubmenuController@ambilSubmenuUntukSidebar');
         $router->get('submenu', 'SubmenuController@ambilSubmenu');
@@ -66,6 +68,10 @@ $router->group(['prefix' => 'api'], function () use ($router){
         $router->post('role/tambah', 'RoleController@tambahRole');
         $router->put('role/ubah/{id}', 'RoleController@ubahRole');
         $router->delete('role/hapus/{id}', 'RoleController@hapusRole');
+        $router->get('role/cek-centang/{id}', 'RoleController@ambilRoleUntukCekCentangAksesRole');
+
+        $router->get('role/akses/cek-centang/{role_id}/{menu_id}', 'AksesRoleController@cekCentangAksesRole');
+        $router->post('role/akses/ubah/{id_role}/{id_menu}', 'AksesRoleController@ubahAksesRole');
 
     });
 
