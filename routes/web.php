@@ -22,37 +22,44 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router){
 
-    $router->post('auth/register', 'AuthController@register');
-    $router->post('auth/login', 'AuthController@login');
-    $router->post('auth/logout', 'AuthController@logout');
-    $router->get('auth/ambil_token', 'AuthController@ambil_token');
-    $router->get('auth/me', 'AuthController@me');
+    $router->group(['prefix' => 'auth'], function () use ($router){
 
-    $router->get('akun/profil/{id}', 'UserController@ambilSatuUser');
-    $router->get('akun/profil/untuk-profil/{id}', 'UserController@ambilSatuUserUntukProfil');
-    $router->get('akun/profil/dengan-role/{id}', 'UserController@ambilSatuUserJoinRole');
-    $router->put('akun/profil/ubah/{id}', 'UserController@ubahUser');
+        $router->post('register', 'AuthController@register');
+        $router->post('login', 'AuthController@login');
+        $router->post('logout', 'AuthController@logout');
+        $router->get('ambil_token', 'AuthController@ambil_token');
+        $router->get('me', 'AuthController@me');
+    });
 
-    $router->get('akun/sandi/{id}', 'UserController@ambilSatuSandi');
-    $router->put('akun/sandi/ubah/{id}', 'UserController@ubahSandi');
+    $router->group(['prefix' => 'akun'], function () use ($router){
+
+        $router->get('profil/{id}', 'UserController@ambilSatuUser');
+        $router->get('profil/untuk-profil/{id}', 'UserController@ambilSatuUserUntukProfil');
+        $router->get('profil/dengan-role/{id}', 'UserController@ambilSatuUserJoinRole');
+        $router->put('profil/ubah/{id}', 'UserController@ubahUser');
+
+        $router->get('sandi/{id}', 'UserController@ambilSatuSandi');
+        $router->put('sandi/ubah/{id}', 'UserController@ubahSandi');
+    });
+
+    $router->group(['prefix' => 'pengaturan'], function () use ($router){
+
+        $router->get('menu/untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
+        $router->get('menu', 'MenuController@ambilMenu');
+        $router->get('menu/{id}', 'MenuController@ambilMenu');
+        $router->post('menu/tambah', 'MenuController@tambahMenu');
+        $router->put('menu/ubah/{id}', 'MenuController@ubahMenu');
+        $router->delete('menu/hapus/{id}', 'MenuController@hapusMenu');
 
 
-    $router->get('pengaturan/menu/untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
-    $router->get('pengaturan/menu', 'MenuController@ambilMenu');
-    $router->get('pengaturan/menu/{id}', 'MenuController@ambilMenu');
-    $router->post('pengaturan/menu/tambah', 'MenuController@tambahMenu');
-    $router->put('pengaturan/menu/ubah/{id}', 'MenuController@ubahMenu');
-    $router->delete('pengaturan/menu/hapus/{id}', 'MenuController@hapusMenu');
-    // $router->post('pengaturan/menu/tambah/dari-submenu', 'MenuController@tambahMenuDariSubmenu');
+        $router->get('submenu/untuk-sidebar/{menu_id}/{menu_utama_id}', 'SubmenuController@ambilSubmenuUntukSidebar');
+        $router->get('submenu', 'SubmenuController@ambilSubmenu');
+        $router->post('submenu/tambah', 'SubmenuController@tambahSubmenu');
+        $router->put('submenu/ubah/{id}', 'SubmenuController@ubahSubmenu');
+        $router->delete('submenu/hapus/{id}', 'SubmenuController@hapusSubmenu');
+
+    });
 
 
 
-    $router->get('pengaturan/submenu/untuk-sidebar/{menu_id}/{menu_utama_id}', 'SubmenuController@ambilSubmenuUntukSidebar');
-    $router->get('pengaturan/submenu', 'SubmenuController@ambilSubmenu');
-    $router->post('pengaturan/submenu/tambah', 'SubmenuController@tambahSubmenu');
-    $router->put('pengaturan/submenu/ubah/{id}', 'SubmenuController@ubahSubmenu');
-    $router->delete('pengaturan/submenu/hapus/{id}', 'SubmenuController@hapusSubmenu');
-
-    // $router->post('pengaturan/menu_utama/tambah/dari-submenu', 'MenuUtamaController@tambahMenuUtamaDariSubmenu');
-    
 });
