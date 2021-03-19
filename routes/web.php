@@ -58,6 +58,11 @@ $router->group(['prefix' => 'api'], function () use ($router){
         $router->put('submenu/ubah/{id}', 'SubmenuController@ubahSubmenu');
         $router->delete('submenu/hapus/{id}', 'SubmenuController@hapusSubmenu');
 
+        $router->get('role', 'RoleController@ambilRole');
+        $router->post('role/tambah', 'RoleController@tambahRole');
+        $router->put('role/ubah/{id}', 'RoleController@ubahRole');
+        $router->delete('role/hapus/{id}', 'RoleController@hapusRole');
+
     });
 
 

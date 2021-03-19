@@ -4,11 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use  App\Models\Menu;
+use  App\Models\Role;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 
-class MenuController extends Controller
+class RoleController extends Controller
 {
      /**
      * Instantiate a new UserController instance.
@@ -26,117 +25,106 @@ class MenuController extends Controller
      * @return Response
      */
 
-    public function ambilMenuUntukSidebar($id){
-        $data = Menu::join('akses_menu', 'menu.id_menu', '=', 'akses_menu.menu_id')
-        ->select('id_menu', 'nama_menu')
-        ->where('role_id', $id)
-        ->orderBy('akses_menu.menu_id', 'asc')
-        ->orderBy('akses_menu.role_id', 'asc')
-        ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Menu barhasil ditemukan!',
-            'data' => $data
-        ], 200);
-    }
+    public function ambilRole(){
 
-    public function ambilMenu(){
-
-        $data =  Menu::select('id_menu', 'nama_menu')->get();
+        $data =  Role::where('id_role', '!=', 4)
+                    ->where('id_role', '!=', 5)
+                    ->select('id_role', 'nama_role')
+                    ->get();
 
         return response()->json([
                 'success' => true,
-                'message' => 'Menu barhasil ditemukan!',
+                'message' => 'Role barhasil ditemukan!',
                 'data' => $data
         ], 200);
     }
 
 
-    public function tambahMenu(Request $request){
+    public function tambahRole(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' => 'required|string|unique:menu,nama_menu'
+            'nama_role' => 'required|string|unique:role,nama_role'
         ],[
 
-            'nama_menu.required' => 'Menu harus diisi!',
-            'nama_menu.string' => 'Menu harus bertipe string!',
-            'nama_menu.unique' => 'Menu itu sudah ada!'
+            'nama_role.required' => 'Role harus diisi!',
+            'nama_role.string' => 'Role harus bertipe string!',
+            'nama_role.unique' => 'Role itu sudah ada!'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['data' => $validator->errors()->all()], 422);
         }       
 
-        $model = new Menu;
-        $model->nama_menu = $request->nama_menu;
+        $model = new Role;
+        $model->nama_role = $request->nama_role;
         $model->save();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'Menu berhasil ditambahkan!',
+                'message' => 'Role berhasil ditambahkan!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal ditambahkan!',
+                'message' => 'Role gagal ditambahkan!',
                 'data' => '',
             ], 400);
         }
     }
 
-    public function ubahMenu(Request $request, $id){
+    public function ubahRole(Request $request, $id){
 
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' =>  'required|string|unique:menu,nama_menu,'.$id.',id_menu'
+            'nama_role' =>  'required|string|unique:role,nama_role,'.$id.',id_role'
         ],[
-            'nama_menu.required' => 'Menu harus diisi!',
-            'nama_menu.string' => 'Menu harus bertipe string!',
-            'nama_menu.unique' => 'Menu itu sudah ada!'
+            'nama_role.required' => 'Role harus diisi!',
+            'nama_role.string' => 'Role harus bertipe string!',
+            'nama_role.unique' => 'Role itu sudah ada!'
         ]);
 
         if ($validator->fails()) {
             return response()->json(['data' => $validator->errors()->all()], 422);
         }
 
-        $model = Menu::find($id);
-        $model->nama_menu = $request->nama_menu;
+        $model = Role::find($id);
+        $model->nama_role = $request->nama_role;
         $model->save();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'Menu berhasil diubah!',
+                'message' => 'Role berhasil diubah!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal diubah!',
+                'message' => 'Role gagal diubah!',
                 'data' => '',
             ], 400);
         }
 
     }
 
-    public function hapusMenu($id){
+    public function hapusRole($id){
 
-        $model = Menu::find($id);
+        $model = Role::find($id);
         $model->delete();
 
         if($model){
             return response()->json([
                 'success' => true,
-                'message' => 'Menu berhasil dihapus!',
+                'message' => 'Role berhasil dihapus!',
                 'data' => ''
             ], 201);
         }else{
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal dihapus!',
+                'message' => 'Role gagal dihapus!',
                 'data' => '',
             ], 400);
         }
