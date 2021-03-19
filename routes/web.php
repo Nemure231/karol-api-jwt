@@ -46,11 +46,15 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->get('menu/untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
         $router->get('menu', 'MenuController@ambilMenu');
-        $router->get('menu/{id}', 'MenuController@ambilMenu');
         $router->post('menu/tambah', 'MenuController@tambahMenu');
         $router->put('menu/ubah/{id}', 'MenuController@ubahMenu');
         $router->delete('menu/hapus/{id}', 'MenuController@hapusMenu');
 
+        $router->get('menu_utama/untuk-sidebar/{id}', 'MenuUtamaController@ambilMenuUtamaUntukSidebar');
+        $router->get('menu_utama', 'MenuUtamaController@ambilMenuUtama');
+        $router->post('menu_utama/tambah', 'MenuUtamaController@tambahMenuUtama');
+        $router->put('menu_utama/ubah/{id}', 'MenuUtamaController@ubahMenuUtama');
+        $router->delete('menu_utama/hapus/{id}', 'MenuUtamaController@hapusMenuUtama');
 
         $router->get('submenu/untuk-sidebar/{menu_id}/{menu_utama_id}', 'SubmenuController@ambilSubmenuUntukSidebar');
         $router->get('submenu', 'SubmenuController@ambilSubmenu');

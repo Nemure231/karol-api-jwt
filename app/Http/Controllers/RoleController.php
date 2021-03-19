@@ -40,7 +40,6 @@ class RoleController extends Controller
         ], 200);
     }
 
-
     public function tambahRole(Request $request){
 
         $validator = Validator::make($request->all(), [

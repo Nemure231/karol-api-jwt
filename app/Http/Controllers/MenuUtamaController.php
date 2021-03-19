@@ -25,8 +25,21 @@ class MenuUtamaController extends Controller
      * @return Response
      */
 
+    public function ambilMenuUtamaUntukSidebar($id){
 
-   
+        $data = MenuUtama::join('menu', 'menu_utama.menu_id', '=', 'menu.id_menu')
+        ->where('menu_utama.menu_id', $id)
+        ->select('nama_menu_utama', 'id_menu_utama', 'ikon_menu_utama')
+        ->get();
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Menu utama barhasil ditemukan!',
+            'data' => $data
+        ], 200);
+    }
+
+
 
 
 
