@@ -88,6 +88,14 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
     $router->group(['prefix' => 'suplai'], function () use ($router){
 
+        $router->group(['prefix' => 'barang'], function () use ($router){
+            $router->get('', 'BarangController@ambilBarang');
+            $router->post('tambah', 'BarangController@tambahBarang');
+            $router->put('ubah/{id}', 'BarangController@ubahBarang');
+            $router->delete('hapus/{id}', 'BarangController@hapusBarang');
+
+        });
+
         $router->group(['prefix' => 'kategori'], function () use ($router){
             $router->get('', 'KategoriController@ambilKategori');
             $router->post('tambah', 'KategoriController@tambahKategori');
