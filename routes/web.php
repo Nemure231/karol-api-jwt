@@ -94,6 +94,14 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->delete('hapus/{id}', 'KategoriController@hapusKategori');
 
         });
+
+        $router->group(['prefix' => 'satuan'], function () use ($router){
+            $router->get('', 'SatuanController@ambilSatuan');
+            $router->post('tambah', 'SatuanController@tambahSatuan');
+            $router->put('ubah/{id}', 'SatuanController@ubahSatuan');
+            $router->delete('hapus/{id}', 'SatuanController@hapusSatuan');
+
+        });
     });
 
 
