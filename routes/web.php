@@ -58,7 +58,8 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'menu_utama'], function () use ($router){
             $router->get('untuk-sidebar/{id}', 'MenuUtamaController@ambilMenuUtamaUntukSidebar');
-            $router->get('', 'MenuUtamaController@ambilMenuUtama');
+            $router->get('', 'MenuUtamaController@ambilMenuUtamaJoinMenu');
+            $router->get('untuk-submenu', 'MenuUtamaController@ambilMenuUtamaUntukSubmenu');
             $router->post('tambah', 'MenuUtamaController@tambahMenuUtama');
             $router->put('ubah/{id}', 'MenuUtamaController@ubahMenuUtama');
             $router->delete('hapus/{id}', 'MenuUtamaController@hapusMenuUtama');
@@ -108,6 +109,14 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->post('tambah', 'MerekController@tambahMerek');
             $router->put('ubah/{id}', 'MerekController@ubahMerek');
             $router->delete('hapus/{id}', 'MerekController@hapusMerek');
+
+        });
+
+        $router->group(['prefix' => 'supplier'], function () use ($router){
+            $router->get('', 'SupplierController@ambilSupplier');
+            $router->post('tambah', 'SupplierController@tambahSupplier');
+            $router->put('ubah/{id}', 'SupplierController@ubahSupplier');
+            $router->delete('hapus/{id}', 'SupplierController@hapusSupplier');
 
         });
     });

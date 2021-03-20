@@ -40,7 +40,19 @@ class MenuUtamaController extends Controller
         ], 200);
     }
 
-    public function ambilMenuUtama(){
+    public function ambilMenuUtamaUntukSubmenu(){
+
+        $data =  MenuUtama::select('id_menu_utama','nama_menu_utama','ikon_menu_utama')
+                    ->get();
+
+        return response()->json([
+                'success' => true,
+                'message' => 'Menu utama barhasil ditemukan!',
+                'data' => $data
+        ], 200);
+    }
+
+    public function ambilMenuUtamaJoinMenu(){
 
         $data =  MenuUtama::join('menu', 'menu_utama.menu_id', '=', 'menu.id_menu')
                     ->select('id_menu_utama', 'nama_menu','nama_menu_utama', 'menu_id','ikon_menu_utama')
