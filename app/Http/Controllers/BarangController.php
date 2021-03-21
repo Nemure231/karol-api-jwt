@@ -124,20 +124,24 @@ class BarangController extends Controller
         }else{
             $id_supplier = Supplier::insertGetId(['nama_supplier' => $supplier_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
         }
+        $kode1 = KodeBarang::select('huruf_kode_barang', 'jumlah_kode_barang')
+                    ->first();
+        $jumlah_nol_kode = $kode1['jumlah_kode_barang'];
 
-        $query = Barang::select(DB::raw('RIGHT(barang.kode_barang,2) as kode_barang'), TRUE)
+        $query = Barang::select('kode_barang')
                     ->orderBy('kode_barang', 'desc')    
                     ->limit(1)->first();
-            if (count($query) <> 0) {
-                $kode= intval($query['kode_barang']) + 1;
+
+        $q = $query['kode_barang'];
+        $qode[] = substr($q, -$jumlah_nol_kode);
+        
+            if (count($qode) != 0) {
+                $kode= intval($qode[0]) + 1;
             }else{
                 $kode =1;
             }
-       
-        $kode1 = KodeBarang::select('huruf_kode_barang', 'jumlah_angka')
-                    ->first();
     
-        $batas= str_pad($kode, "".$kode1['jumlah_angka']."","0", STR_PAD_LEFT);
+        $batas= str_pad($kode, "".$jumlah_nol_kode."","0", STR_PAD_LEFT);
         $kode_auto = "".$kode1['huruf_kode_barang']."".$batas;
 
         $model = new Barang;

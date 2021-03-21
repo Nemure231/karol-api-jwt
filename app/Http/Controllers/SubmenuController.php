@@ -79,15 +79,15 @@ class SubmenuController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            // return response()->json(['data' => $validator->errors()->all()], 422);
 
-            // return response()->json(['data' => [
-            //     0 => ['menu_id' => $validator->errors()->first('menu_id')],
-            //     1 => ['menu_utama_id' =>$validator->errors()->first('menu_utama_id')],
-            //     2 => ['nama_submenu' =>$validator->errors()->first('nama_submenu')],
-            //     3 => ['url_submenu'=>$validator->errors()->first('url_submenu')],
-            //     4 => ['ikon_submenu' => $validator->errors()->first('ikon_submenu')],
-            // ]], 422);
+            return response()->json(['data' => [
+                'menu_id' => $validator->errors()->first('menu_id'),
+                'menu_utama_id' =>$validator->errors()->first('menu_utama_id'),
+                'nama_submenu' =>$validator->errors()->first('nama_submenu'),
+                'url_submenu'=>$validator->errors()->first('url_submenu'),
+                'ikon_submenu' => $validator->errors()->first('ikon_submenu'),
+            ]], 422);
 
             // dd($validator->errors());
         }
