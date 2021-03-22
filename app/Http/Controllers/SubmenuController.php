@@ -81,12 +81,15 @@ class SubmenuController extends Controller
         if ($validator->fails()) {
             // return response()->json(['data' => $validator->errors()->all()], 422);
 
-            return response()->json(['data' => [
-                'menu_id' => $validator->errors()->first('menu_id'),
-                'menu_utama_id' =>$validator->errors()->first('menu_utama_id'),
-                'nama_submenu' =>$validator->errors()->first('nama_submenu'),
-                'url_submenu'=>$validator->errors()->first('url_submenu'),
-                'ikon_submenu' => $validator->errors()->first('ikon_submenu'),
+            return response()->json([
+                'success' => false,
+                'message' => 'Submenu gagal diubah!',
+                'data' => [
+                    'menu_id' => $validator->errors()->first('menu_id'),
+                    'menu_utama_id' =>$validator->errors()->first('menu_utama_id'),
+                    'nama_submenu' =>$validator->errors()->first('nama_submenu'),
+                    'url_submenu'=>$validator->errors()->first('url_submenu'),
+                    'ikon_submenu' => $validator->errors()->first('ikon_submenu'),
             ]], 422);
 
             // dd($validator->errors());
@@ -126,12 +129,6 @@ class SubmenuController extends Controller
                 'message' => 'Submenu berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Submenu gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
     
@@ -157,7 +154,19 @@ class SubmenuController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            // return response()->json(['data' => $validator->errors()->all()], 422);
+
+            return response()->json([
+                'success' => false,
+                'message' => 'Submenu gagal diubah!',
+                'data' => [
+                    'menu_id' => $validator->errors()->first('menu_id'),
+                    'menu_utama_id' =>$validator->errors()->first('menu_utama_id'),
+                    'nama_submenu' =>$validator->errors()->first('nama_submenu'),
+                    'url_submenu'=>$validator->errors()->first('url_submenu'),
+                    'ikon_submenu' => $validator->errors()->first('ikon_submenu'),
+            ]], 422);
+
         }
 
         $menu_id = $request->menu_id;
@@ -194,12 +203,6 @@ class SubmenuController extends Controller
                 'message' => 'Submenu berhasil diubah!',
                 'data' => ''
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Submenu gagal diubah!',
-                'data' => '',
-            ], 400);
         }
     }
 
