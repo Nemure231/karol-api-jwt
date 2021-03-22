@@ -33,11 +33,20 @@ class MenuUtamaController extends Controller
         ->select('nama_menu_utama', 'id_menu_utama', 'ikon_menu_utama')
         ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Menu utama barhasil ditemukan!',
-            'data' => $data
-        ], 200);
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu utama barhasil ditemukan!',
+                'data' => $data
+            ], 200);
+        }
+        if(!$data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu utama gagal ditemukan!',
+                'data' => ''
+            ], 404);
+        }
     }
 
     public function ambilMenuUtamaUntukSubmenu(){
@@ -45,11 +54,20 @@ class MenuUtamaController extends Controller
         $data =  MenuUtama::select('id_menu_utama','nama_menu_utama','ikon_menu_utama')
                     ->get();
 
-        return response()->json([
+        if($data){
+            return response()->json([
                 'success' => true,
                 'message' => 'Menu utama barhasil ditemukan!',
                 'data' => $data
-        ], 200);
+            ], 200);
+        }
+        if(!$data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu utama gagal ditemukan!',
+                'data' => ''
+            ], 404);
+        }
     }
 
     public function ambilMenuUtamaJoinMenu(){
@@ -58,11 +76,20 @@ class MenuUtamaController extends Controller
                     ->select('id_menu_utama', 'nama_menu','nama_menu_utama', 'menu_id','ikon_menu_utama')
                     ->get();
 
-        return response()->json([
+        if($data){
+            return response()->json([
                 'success' => true,
                 'message' => 'Menu utama barhasil ditemukan!',
                 'data' => $data
-        ], 200);
+            ], 200);
+        }
+        if(!$data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu utama gagal ditemukan!',
+                'data' => ''
+            ], 404);
+        }
     }
 
 
@@ -80,7 +107,12 @@ class MenuUtamaController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'data' => [
+                    'menu_id' => $validator->errors()->first('menu_id'),
+                    'nama_menu_utama' =>$validator->errors()->first('nama_menu_utama'),
+                    'ikon_menu_utama' => $validator->errors()->first('ikon_menu_utama'),
+            ]], 422);
         }
 
         $menu_id = $request->menu_id;
@@ -102,12 +134,6 @@ class MenuUtamaController extends Controller
                 'message' => 'Menu utama berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Menu utama gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
 
@@ -126,7 +152,12 @@ class MenuUtamaController extends Controller
 
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'data' => [
+                    'menu_id' => $validator->errors()->first('menu_id'),
+                    'nama_menu_utama' =>$validator->errors()->first('nama_menu_utama'),
+                    'ikon_menu_utama' => $validator->errors()->first('ikon_menu_utama'),
+            ]], 422);
         }
 
         $menu_id = $request->menu_id;
@@ -148,12 +179,6 @@ class MenuUtamaController extends Controller
                 'message' => 'Menu utama berhasil diubah!',
                 'data' => ''
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Menu utama gagal diubah!',
-                'data' => '',
-            ], 400);
         }
 
     }
@@ -169,7 +194,8 @@ class MenuUtamaController extends Controller
                 'message' => 'Menu utama berhasil dihapus!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'Menu utama gagal dihapus!',
