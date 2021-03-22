@@ -33,11 +33,20 @@ class MenuController extends Controller
         ->orderBy('akses_role.role_id', 'asc')
         ->get();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Menu barhasil ditemukan!',
-            'data' => $data
-        ], 200);
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu barhasil ditemukan!',
+                'data' => $data
+            ], 200);
+        }
+        if(!$data){
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal ditemukan!',
+                'data' => ''
+            ], 200);
+        }
     }
 
     public function ambilMenuUntukDaftarRoleAkses(){
@@ -45,39 +54,64 @@ class MenuController extends Controller
                 ['id_menu', '!=', '1'],
                 ['nama_menu', '!=', 'Role'],
             ])->select('id_menu', 'nama_menu')->get();
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu barhasil ditemukan!',
+                'data' => $data
+            ], 200);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Menu barhasil ditemukan!',
-            'data' => $data
-        ], 200);
+        if(!$data){
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal ditemukan!',
+                'data' => ''
+            ], 200);
+        }
     }
 
     public function ambilMenu(){
 
         $data =  Menu::select('id_menu', 'nama_menu')->get();
 
-        return response()->json([
-                'success' => true,
-                'message' => 'Menu barhasil ditemukan!',
-                'data' => $data
-        ], 200);
-    }
+        if($data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'Menu barhasil ditemukan!',
+                    'data' => $data
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal ditemukan!',
+                'data' => ''
+            ], 200);
+        }
+    }   
+
 
 
     public function tambahMenu(Request $request){
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' => 'required|string|unique:menu,nama_menu'
+            'nama_menu' => 'required|unique:menu,nama_menu'
         ],[
 
-            'nama_menu.required' => 'Menu harus diisi!',
-            'nama_menu.string' => 'Menu harus bertipe string!',
+            'nama_menu.required' => 'Harus diisi!',
             'nama_menu.unique' => 'Menu itu sudah ada!'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal diubah!',
+                'data' => [
+                    'nama_menu' => $validator->errors()->first('nama_menu')
+                ]
+            ], 422);
         }       
 
         $model = new Menu;
@@ -90,12 +124,6 @@ class MenuController extends Controller
                 'message' => 'Menu berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Menu gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
 
@@ -103,15 +131,20 @@ class MenuController extends Controller
 
 
         $validator = Validator::make($request->all(), [
-            'nama_menu' =>  'required|string|unique:menu,nama_menu,'.$id.',id_menu'
+            'nama_menu' =>  'required|unique:menu,nama_menu,'.$id.',id_menu'
         ],[
-            'nama_menu.required' => 'Menu harus diisi!',
-            'nama_menu.string' => 'Menu harus bertipe string!',
+            'nama_menu.required' => 'Harus diisi!',
             'nama_menu.unique' => 'Menu itu sudah ada!'
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'data' => [
+                    'success' => false,
+                    'message' => 'Menu gagal diubah!',
+                    'nama_menu' => $validator->errors()->first('nama_menu')
+                ]
+            ], 422);
         }
 
         $model = Menu::find($id);
@@ -124,12 +157,6 @@ class MenuController extends Controller
                 'message' => 'Menu berhasil diubah!',
                 'data' => ''
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Menu gagal diubah!',
-                'data' => '',
-            ], 400);
         }
 
     }
@@ -145,7 +172,9 @@ class MenuController extends Controller
                 'message' => 'Menu berhasil dihapus!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'Menu gagal dihapus!',

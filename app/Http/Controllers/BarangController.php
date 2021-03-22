@@ -101,28 +101,44 @@ class BarangController extends Controller
         if (is_numeric($kategori_id)){
             $id_kategori = $kategori_id;
         }else{
-            $id_kategori = Kategori::insertGetId(['nama_kategori' => $kategori_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+            $id_kategori = Kategori::insertGetId([
+                'nama_kategori' => $kategori_id, 
+                'created_at' => date('Y-m-d H:i:s'), 
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
         }
 
         $satuan_id = $request->satuan_id;
         if (is_numeric($satuan_id)){
             $id_satuan = $satuan_id;
         }else{
-            $id_satuan = Satuan::insertGetId(['nama_satuan' => $satuan_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+            $id_satuan = Satuan::insertGetId([
+                'nama_satuan' => $satuan_id, 
+                'created_at' => date('Y-m-d H:i:s'), 
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
         }
 
         $merek_id = $request->merek_id;
         if (is_numeric($merek_id)){
             $id_merek = $merek_id;
         }else{
-            $id_merek = Merek::insertGetId(['nama_merek' => $merek_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+            $id_merek = Merek::insertGetId([
+                'nama_merek' => $merek_id, 
+                'created_at' => date('Y-m-d H:i:s'), 
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
         }
 
         $supplier_id = $request->supplier_id;
         if (is_numeric($supplier_id)){
             $id_supplier = $supplier_id;
         }else{
-            $id_supplier = Supplier::insertGetId(['nama_supplier' => $supplier_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
+            $id_supplier = Supplier::insertGetId([
+                'nama_supplier' => $supplier_id, 
+                'created_at' => date('Y-m-d H:i:s'), 
+                'updated_at' => date('Y-m-d H:i:s')
+            ]);
         }
         $kode1 = KodeBarang::select('huruf_kode_barang', 'jumlah_kode_barang')
                     ->first();
