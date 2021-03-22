@@ -45,7 +45,7 @@ class MenuController extends Controller
                 'success' => false,
                 'message' => 'Menu gagal ditemukan!',
                 'data' => ''
-            ], 200);
+            ], 404);
         }
     }
 
@@ -67,7 +67,7 @@ class MenuController extends Controller
                 'success' => false,
                 'message' => 'Menu gagal ditemukan!',
                 'data' => ''
-            ], 200);
+            ], 404);
         }
     }
 
@@ -88,7 +88,7 @@ class MenuController extends Controller
                 'success' => false,
                 'message' => 'Menu gagal ditemukan!',
                 'data' => ''
-            ], 200);
+            ], 404);
         }
     }   
 

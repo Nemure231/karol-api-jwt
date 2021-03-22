@@ -34,12 +34,20 @@ class SubmenuController extends Controller
                         ->where('submenu.menu_utama_id', $menu_utama_id)
                         ->where('submenu.status_submenu', 1)
                         ->get();
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Submenu barhasil ditemukan!',
-            'data' => $data
-        ], 200);
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Submenu barhasil ditemukan!',
+                'data' => $data
+            ], 200);
+        }
+        if(!$data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Submenu gagal ditemukan!',
+                'data' => ''
+            ], 404);
+        }
     }
 
     public function ambilSubMenu(){
@@ -50,12 +58,20 @@ class SubmenuController extends Controller
                     'nama_menu_utama', 'nama_submenu', 'url_submenu', 'ikon_submenu', 'status_submenu', 
                     'id_submenu', 'menu_utama_id')
                     ->get();
-
-        return response()->json([
+        if(!$data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'Submenu barhasil ditemukan!',
+                    'data' => $data
+            ], 200);
+        }
+        if(!$data){
+            return response()->json([
                 'success' => true,
-                'message' => 'Submenu barhasil ditemukan!',
-                'data' => $data
-        ], 200);
+                'message' => 'Submenu gagal ditemukan!',
+                'data' => ''
+            ], 404);
+        }
     }
 
     public function tambahSubmenu(Request $request){
@@ -228,7 +244,8 @@ class SubmenuController extends Controller
                 'message' => 'Submenu berhasil dihapus!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'Submenu gagal dihapus!',
