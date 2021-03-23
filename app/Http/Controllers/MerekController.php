@@ -42,7 +42,7 @@ class MerekController extends Controller
                     'success' => false,
                     'message' => 'Merek gagal ditemukan!',
                     'data' => ''
-            ], 200);
+            ], 404);
         }
 
 
@@ -60,11 +60,17 @@ class MerekController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Merek gagal ditambahkan!',
+                'data' => [
+                    'nama_merek' => $validator->errors()->first('nama_merek')
+                ]
+            ], 422);
         }       
 
         $model = new Merek;
-        $model->nama_merek = $request->nama_merek;
+        $model->nama_merek = $request->input('nama_merek');
         $model->save();
 
         if($model){
@@ -73,14 +79,6 @@ class MerekController extends Controller
                 'message' => 'Merek berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }
-
-        if(!$model){
-            return response()->json([
-                'success' => false,
-                'message' => 'Merek gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
 
@@ -94,11 +92,17 @@ class MerekController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Merek gagal ditambahkan!',
+                'data' => [
+                    'nama_merek' => $validator->errors()->first('nama_merek')
+                ]
+            ], 422);
         }
 
         $model = Merek::find($id);
-        $model->nama_merek = $request->nama_merek;
+        $model->nama_merek = $request->input('nama_merek');
         $model->save();
 
         if($model){
