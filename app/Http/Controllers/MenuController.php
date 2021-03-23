@@ -107,7 +107,7 @@ class MenuController extends Controller
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal diubah!',
+                'message' => 'Menu gagal ditambah!',
                 'data' => [
                     'nama_menu' => $validator->errors()->first('nama_menu')
                 ]

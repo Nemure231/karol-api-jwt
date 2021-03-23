@@ -60,11 +60,15 @@ class SatuanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'data' => [
+                    'nama_satuan' => $validator->errors()->first('nama_satuan')
+                ]
+            ], 422);
         }       
 
         $model = new Satuan;
-        $model->nama_satuan = $request->nama_satuan;
+        $model->nama_satuan = $request->input('nama_satuan');
         $model->save();
 
         if($model){
@@ -73,14 +77,6 @@ class SatuanController extends Controller
                 'message' => 'Satuan berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }
-
-        if(!$model){
-            return response()->json([
-                'success' => false,
-                'message' => 'Satuan gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
 
@@ -94,11 +90,15 @@ class SatuanController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'data' => [
+                    'nama_satuan' => $validator->errors()->first('nama_satuan')
+                ]
+            ], 422);
         }
 
         $model = Satuan::find($id);
-        $model->nama_satuan = $request->nama_satuan;
+        $model->nama_satuan = $request->input('nama_satuan');
         $model->save();
 
         if($model){
