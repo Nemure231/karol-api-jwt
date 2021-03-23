@@ -55,7 +55,7 @@ class SupplierController extends Controller
             'nama_supplier' => 'required|unique:supplier,nama_supplier'
         ],[
 
-            'nama_supplier.required' => 'Supplier harus diisi!',
+            'nama_supplier.required' => 'Harus diisi!',
             'nama_supplier.unique' => 'Supplier itu sudah ada!'
         ]);
 
@@ -87,7 +87,7 @@ class SupplierController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_supplier' =>  'required|unique:supplier,nama_supplier,'.$id.',id_supplier'
         ],[
-            'nama_supplier.required' => 'Supplier harus diisi!',
+            'nama_supplier.required' => 'Harus diisi!',
             'nama_supplier.unique' => 'Supplier itu sudah ada!'
         ]);
 

@@ -80,8 +80,12 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->put('ubah/{id}', 'RoleController@ubahRole');
             $router->delete('hapus/{id}', 'RoleController@hapusRole');
             $router->get('cek-centang/{id}', 'RoleController@ambilRoleUntukCekCentangAksesRole');
+
+
             $router->get('akses/cek-centang/{role_id}/{menu_id}', 'AksesRoleController@cekCentangAksesRole');
             $router->post('akses/ubah/{id_role}/{id_menu}', 'AksesRoleController@ubahAksesRole');
+            $router->get('akses/cek-akses/{role_id}/{uri_menu}', 'AksesRoleController@cekAksesUser');
+
         });
 
     });

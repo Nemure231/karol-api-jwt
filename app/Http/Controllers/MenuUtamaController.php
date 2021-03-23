@@ -100,10 +100,10 @@ class MenuUtamaController extends Controller
             'nama_menu_utama' => 'required|unique:menu_utama,nama_menu_utama',
             'ikon_menu_utama' => 'required'
         ],[
-            'menu_id.required' => 'Nama menu harus dipilih!',
-            'nama_menu_utama.required' => 'Menu utama harus diisi!',
+            'menu_id.required' => 'Harus dipilih!',
+            'nama_menu_utama.required' => 'Harus diisi!',
             'nama_menu_utama.unique' => 'Menu utama itu sudah ada!',
-            'ikon_menu_utama.required' => 'Ikon menu utama harus diisi!'
+            'ikon_menu_utama.required' => 'Harus diisi!'
         ]);
 
         if ($validator->fails()) {
@@ -144,10 +144,10 @@ class MenuUtamaController extends Controller
             'nama_menu_utama' => 'required|unique:menu_utama,nama_menu_utama,'.$id.',id_menu_utama',
             'ikon_menu_utama' => 'required'
         ],[
-            'menu_id.required'                  => 'Nama menu harus dipilih',
-            'nama_menu_utama.required' => 'Menu utama harus diisi!',
+            'menu_id.required'      => 'Harus dipilih',
+            'nama_menu_utama.required' => 'harus diisi!',
             'nama_menu_utama.unique' => 'Menu utama itu sudah ada!',
-            'ikon_menu_utama.required' => 'Ikon menu utama harus diisi!'
+            'ikon_menu_utama.required' => 'Harus diisi!'
         ]);
 
 

@@ -55,7 +55,7 @@ class KategoriController extends Controller
             'nama_kategori' => 'required|unique:kategori,nama_kategori'
         ],[
 
-            'nama_kategori.required' => 'Kategori harus diisi!',
+            'nama_kategori.required' => 'Harus diisi!',
             'nama_kategori.unique' => 'Kategori itu sudah ada!'
         ]);
 
@@ -87,7 +87,7 @@ class KategoriController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_kategori' =>  'required|unique:kategori,nama_kategori,'.$id.',id_kategori'
         ],[
-            'nama_kategori.required' => 'Kategori harus diisi!',
+            'nama_kategori.required' => 'Harus diisi!',
             'nama_kategori.unique' => 'Kategori itu sudah ada!'
         ]);
 

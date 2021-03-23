@@ -55,7 +55,7 @@ class SatuanController extends Controller
             'nama_satuan' => 'required|unique:satuan,nama_satuan'
         ],[
 
-            'nama_satuan.required' => 'Satuan harus diisi!',
+            'nama_satuan.required' => 'Harus diisi!',
             'nama_satuan.unique' => 'Satuan itu sudah ada!'
         ]);
 
@@ -85,7 +85,7 @@ class SatuanController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_satuan' =>  'required|unique:satuan,nama_satuan,'.$id.',id_satuan'
         ],[
-            'nama_satuan.required' => 'Satuan harus diisi!',
+            'nama_satuan.required' => 'Harus diisi!',
             'nama_satuan.unique' => 'Satuan itu sudah ada!'
         ]);
 

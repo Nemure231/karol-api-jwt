@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\AksesRole;
+use App\Models\Menu;
 use lluminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
@@ -42,11 +43,38 @@ class AKsesRoleController extends Controller
                 'success' => false,
                 'message' => 'Menu tersebut tidak ada!',
                 'data' => ''
+            ], 404);
+        }
+    }
+
+    public function cekAksesUser($role_id, $uri_menu){
+
+        $menu = Menu::select('id_menu')
+                ->where('nama_menu', $uri_menu)
+                ->first();
+        $menu_id = $menu['id_menu'];
+
+        $data = AksesRole::where(['role_id' => $role_id, 'menu_id' => $menu_id])
+                ->count();
+
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'User tersebut berhak mengakses menu!',
+                'data' => $data
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                'success' => false,
+                'message' => 'User tersebut tidak berhak mengakses menu!',
+                'data' => ''
             ], 200);
         }
     }
 
-    public function UbahAksesRole(Request $request, $id_role, $id_menu){
+    public function ubahAksesRole(Request $request, $id_role, $id_menu){
         $data = AksesRole::where(['role_id' => $id_role, 'menu_id' => $id_menu])
                 ->count();
 

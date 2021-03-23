@@ -56,7 +56,7 @@ class BarangController extends Controller
                     'success' => false,
                     'message' => 'Barang gagal ditemukan!',
                     'data' => ''
-            ], 200);
+            ], 404);
         }
     }
 
@@ -65,7 +65,6 @@ class BarangController extends Controller
 
         $validator = Validator::make($request->all(), [
             'nama_barang' => 'required|unique:barang,nama_barang',
-            // 'kode_barang' => 'required',
             'kategori_id' => 'required',
             'satuan_id' => 'required',
             'merek_id' => 'required',
@@ -76,28 +75,42 @@ class BarangController extends Controller
             'stok_barang' => 'required|numeric',
 
         ],[
-            'nama_barang.required' => 'Barang harus diisi!',
+            'nama_barang.required' => 'Harus diisi!',
             'nama_barang.unique' => 'Barang itu sudah ada!',
-            'kategori_id.required' => 'Kategori harus dipilih!',
-            'satuan_id.required' => 'Satuan harus dipilih!',
-            'merek_id.required' => 'Merek harus dipilih!',
-            'supplier_id.required' => 'Supplier harus dipilih!',
-            'harga_pokok.required' => 'Harga pokok harus diisi!',
-            'harga_pokok.numeric' => 'Harga pokok harus angka!',
-            'harga_konsumen.required' => 'Harga konsumen harus diisi!',
-            'harga_konsumen.numeric' => 'Harga konsumen harus angka!',
-            'harga_anggota.required' => 'Harga anggota harus diisi!',
-            'harga_anggota.numeric' => 'Harga anggota harus angka!',
-            'stok_barang.required' => 'Stok harus diisi!',
-            'stok_barang.numeric' => 'Stok harus angka!'
+            'kategori_id.required' => 'Harus dipilih!',
+            'satuan_id.required' => 'Harus dipilih!',
+            'merek_id.required' => 'Harus dipilih!',
+            'supplier_id.required' => 'Harus dipilih!',
+            'harga_pokok.required' => 'Harus diisi!',
+            'harga_pokok.numeric' => 'Harus angka!',
+            'harga_konsumen.required' => 'Harus diisi!',
+            'harga_konsumen.numeric' => 'Harus angka!',
+            'harga_anggota.required' => 'Harus diisi!',
+            'harga_anggota.numeric' => 'Harus angka!',
+            'stok_barang.required' => 'Harus diisi!',
+            'stok_barang.numeric' => 'Harus angka!'
 
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang gagal ditambahkan!',
+                'data' => [
+                    'nama_barang' => $validator->errors()->first('nama_barang'),
+                    'kategori_id' => $validator->errors()->first('kategori_id'),
+                    'satuan_id' => $validator->errors()->first('satuan_id'),
+                    'merek_id' => $validator->errors()->first('merek_id'),
+                    'supplier_id' => $validator->errors()->first('supplier_id'),
+                    'harga_pokok' => $validator->errors()->first('harga_pokok'),
+                    'harga_konsumen' => $validator->errors()->first('harga_konsumen'),
+                    'harga_anggota' => $validator->errors()->first('harga_anggota'),
+                    'stok_barang' => $validator->errors()->first('stok_barang')
+                ]
+            ], 422);
         }
 
-        $kategori_id = $request->kategori_id;
+        $kategori_id = $request->input('kategori_id');
         if (is_numeric($kategori_id)){
             $id_kategori = $kategori_id;
         }else{
@@ -108,7 +121,7 @@ class BarangController extends Controller
             ]);
         }
 
-        $satuan_id = $request->satuan_id;
+        $satuan_id = $request->input('satuan_id');
         if (is_numeric($satuan_id)){
             $id_satuan = $satuan_id;
         }else{
@@ -119,7 +132,7 @@ class BarangController extends Controller
             ]);
         }
 
-        $merek_id = $request->merek_id;
+        $merek_id = $request->input('merek_id');
         if (is_numeric($merek_id)){
             $id_merek = $merek_id;
         }else{
@@ -130,7 +143,7 @@ class BarangController extends Controller
             ]);
         }
 
-        $supplier_id = $request->supplier_id;
+        $supplier_id = $request->input('supplier_id');
         if (is_numeric($supplier_id)){
             $id_supplier = $supplier_id;
         }else{
@@ -162,15 +175,15 @@ class BarangController extends Controller
 
         $model = new Barang;
         $model->kode_barang = $kode_auto;
-        $model->nama_barang = $request->nama_barang;
+        $model->nama_barang = $request->input('nama_barang');
         $model->kategori_id = $id_kategori;
         $model->satuan_id = $id_satuan;
         $model->merek_id = $id_merek;
         $model->supplier_id = $id_supplier;
-        $model->harga_pokok = $request->harga_pokok;
-        $model->harga_konsumen = $request->harga_konsumen;
-        $model->harga_anggota = $request->harga_anggota;
-        $model->stok_barang = $request->stok_barang;
+        $model->harga_pokok = $request->input('harga_pokok');
+        $model->harga_konsumen = $request->input('harga_konsumen');
+        $model->harga_anggota = $request->input('harga_anggota');
+        $model->stok_barang = $request->input('stok_barang');
         $model->save();
 
         if($model){
@@ -179,7 +192,8 @@ class BarangController extends Controller
                 'message' => 'Barang berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'Barang gagal ditambahkan!',
@@ -202,50 +216,64 @@ class BarangController extends Controller
             'stok_barang' => 'required|numeric',
 
         ],[
-            'nama_barang.required' => 'Barang harus diisi!',
+            'nama_barang.required' => 'Harus diisi!',
             'nama_barang.unique' => 'Barang itu sudah ada!',
-            'kategori_id.required' => 'Kategori harus dipilih!',
-            'satuan_id.required' => 'Satuan harus dipilih!',
-            'merek_id.required' => 'Merek harus dipilih!',
-            'supplier_id.required' => 'Supplier harus dipilih!',
-            'harga_pokok.required' => 'Harga pokok harus diisi!',
-            'harga_pokok.numeric' => 'Harga pokok harus angka!',
-            'harga_konsumen.required' => 'Harga konsumen harus diisi!',
-            'harga_konsumen.numeric' => 'Harga konsumen harus angka!',
-            'harga_anggota.required' => 'Harga anggota harus diisi!',
-            'harga_anggota.numeric' => 'Harga anggota harus angka!',
-            'stok_barang.required' => 'Stok harus diisi!',
-            'stok_barang.numeric' => 'Stok harus angka!'
+            'kategori_id.required' => 'harus dipilih!',
+            'satuan_id.required' => 'Harus dipilih!',
+            'merek_id.required' => 'Harus dipilih!',
+            'supplier_id.required' => 'Harus dipilih!',
+            'harga_pokok.required' => 'Harus diisi!',
+            'harga_pokok.numeric' => 'Harus angka!',
+            'harga_konsumen.required' => 'Harus diisi!',
+            'harga_konsumen.numeric' => 'Harus angka!',
+            'harga_anggota.required' => 'Harus diisi!',
+            'harga_anggota.numeric' => 'Harus angka!',
+            'stok_barang.required' => 'Harus diisi!',
+            'stok_barang.numeric' => 'Harus angka!'
 
         ]);
 
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang gagal ditambahkan!',
+                'data' => [
+                    'nama_barang' => $validator->errors()->first('nama_barang'),
+                    'kategori_id' => $validator->errors()->first('kategori_id'),
+                    'satuan_id' => $validator->errors()->first('satuan_id'),
+                    'merek_id' => $validator->errors()->first('merek_id'),
+                    'supplier_id' => $validator->errors()->first('supplier_id'),
+                    'harga_pokok' => $validator->errors()->first('harga_pokok'),
+                    'harga_konsumen' => $validator->errors()->first('harga_konsumen'),
+                    'harga_anggota' => $validator->errors()->first('harga_anggota'),
+                    'stok_barang' => $validator->errors()->first('stok_barang')
+                ]
+            ], 422);
         }
 
-        $kategori_id = $request->kategori_id;
+        $kategori_id = $request->input('kategori_id');
         if (is_numeric($kategori_id)){
             $id_kategori = $kategori_id;
         }else{
             $id_kategori = Kategori::insertGetId(['nama_kategori' => $kategori_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
         }
 
-        $satuan_id = $request->satuan_id;
+        $satuan_id = $request->input('satuan_id');
         if (is_numeric($satuan_id)){
             $id_satuan = $satuan_id;
         }else{
             $id_satuan = Satuan::insertGetId(['nama_satuan' => $satuan_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
         }
 
-        $merek_id = $request->merek_id;
+        $merek_id = $request->input('merek_id');
         if (is_numeric($merek_id)){
             $id_merek = $merek_id;
         }else{
             $id_merek = Merek::insertGetId(['nama_merek' => $merek_id, 'created_at' => date('Y-m-d H:i:s'), 'updated_at' => date('Y-m-d H:i:s')]);
         }
 
-        $supplier_id = $request->supplier_id;
+        $supplier_id = $request->input('supplier_id');
         if (is_numeric($supplier_id)){
             $id_supplier = $supplier_id;
         }else{
@@ -254,15 +282,15 @@ class BarangController extends Controller
 
 
         $model = Barang::find($id);
-        $model->nama_barang = $request->nama_barang;
+        $model->nama_barang = $request->input('nama_barang');
         $model->kategori_id = $id_kategori;
         $model->satuan_id = $id_satuan;
         $model->merek_id = $id_merek;
         $model->supplier_id = $id_supplier;
-        $model->harga_pokok = $request->harga_pokok;
-        $model->harga_konsumen = $request->harga_konsumen;
-        $model->harga_anggota = $request->harga_anggota;
-        $model->stok_barang = $request->stok_barang;
+        $model->harga_pokok = $request->input('harga_pokok');
+        $model->harga_konsumen = $request->input('harga_konsumen');
+        $model->harga_anggota = $request->input('harga_anggota');
+        $model->stok_barang = $request->input('stok_barang');
         $model->save();
 
         if($model){
@@ -271,7 +299,8 @@ class BarangController extends Controller
                 'message' => 'Barang berhasil diubah!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'Barang gagal diubah!',
@@ -292,7 +321,8 @@ class BarangController extends Controller
                 'message' => 'Barang berhasil dihapus!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'Barang gagal dihapus!',

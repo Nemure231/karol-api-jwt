@@ -55,7 +55,7 @@ class MerekController extends Controller
             'nama_merek' => 'required|unique:merek,nama_merek'
         ],[
 
-            'nama_merek.required' => 'Merek harus diisi!',
+            'nama_merek.required' => 'Harus diisi!',
             'nama_merek.unique' => 'Merek itu sudah ada!'
         ]);
 
@@ -87,7 +87,7 @@ class MerekController extends Controller
         $validator = Validator::make($request->all(), [
             'nama_merek' =>  'required|unique:merek,nama_merek,'.$id.',id_merek'
         ],[
-            'nama_merek.required' => 'Merek harus diisi!',
+            'nama_merek.required' => 'Harus diisi!',
             'nama_merek.unique' => 'Merek itu sudah ada!'
         ]);
 
