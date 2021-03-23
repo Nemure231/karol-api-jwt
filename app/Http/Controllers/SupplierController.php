@@ -42,7 +42,7 @@ class SupplierController extends Controller
                     'success' => false,
                     'message' => 'Supplier gagal ditemukan!',
                     'data' => ''
-            ], 200);
+            ], 404);
         }
 
 
@@ -60,11 +60,17 @@ class SupplierController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Supplier gagal ditambahkan!',
+                'data' => [
+                    'nama_supplier' => $validator->errors()->first('nama_supplier')
+                ]
+            ], 422);
         }       
 
         $model = new Supplier;
-        $model->nama_supplier = $request->nama_supplier;
+        $model->nama_supplier = $request->input('nama_supplier');
         $model->save();
 
         if($model){
@@ -73,14 +79,6 @@ class SupplierController extends Controller
                 'message' => 'Supplier berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }
-
-        if(!$model){
-            return response()->json([
-                'success' => false,
-                'message' => 'Supplier gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
 
@@ -94,11 +92,17 @@ class SupplierController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Supplier gagal ditambahkan!',
+                'data' => [
+                    'nama_supplier' => $validator->errors()->first('nama_supplier')
+                ]
+            ], 422);
         }
 
         $model = Supplier::find($id);
-        $model->nama_supplier = $request->nama_supplier;
+        $model->nama_supplier = $request->input('nama_supplier');
         $model->save();
 
         if($model){
