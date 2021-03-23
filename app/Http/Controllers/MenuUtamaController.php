@@ -124,8 +124,8 @@ class MenuUtamaController extends Controller
 
         $model = new MenuUtama;
         $model->menu_id = $id_menu;
-        $model->nama_menu_utama = $request->nama_menu_utama;
-        $model->ikon_menu_utama = $request->ikon_menu_utama;
+        $model->nama_menu_utama = $request->input('nama_menu_utama');
+        $model->ikon_menu_utama = $request->input('ikon_menu_utama');
         $model->save();
 
         if($model){
@@ -160,7 +160,7 @@ class MenuUtamaController extends Controller
             ]], 422);
         }
 
-        $menu_id = $request->menu_id;
+        $menu_id = $request->input('menu_id');
         if (is_numeric($menu_id)){
             $id_menu = $menu_id;
         }else{
@@ -169,8 +169,8 @@ class MenuUtamaController extends Controller
 
         $model = MenuUtama::find($id);
         $model->menu_id = $id_menu;
-        $model->nama_menu_utama = $request->nama_menu_utama;
-        $model->ikon_menu_utama = $request->ikon_menu_utama;
+        $model->nama_menu_utama = $request->input('nama_menu_utama');
+        $model->ikon_menu_utama = $request->input('ikon_menu_utama');
         $model->save();
 
         if($model){

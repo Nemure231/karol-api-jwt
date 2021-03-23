@@ -107,7 +107,6 @@ class SubmenuController extends Controller
                     'ikon_submenu' => $validator->errors()->first('ikon_submenu'),
             ]], 422);
 
-            // dd($validator->errors());
         }
 
         $menu_id = $request->input('menu_id');
@@ -229,6 +228,14 @@ class SubmenuController extends Controller
                 'message' => 'Submenu berhasil diubah!',
                 'data' => ''
             ], 201);
+        }
+
+        if(!$model){
+            return response()->json([
+                'success' => true,
+                'message' => 'Submenu gagal diubah!',
+                'data' => ''
+            ], 400);
         }
     }
 

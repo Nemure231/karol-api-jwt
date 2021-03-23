@@ -29,12 +29,21 @@ class AKsesRoleController extends Controller
     public function cekCentangAksesRole($role_id, $menu_id){
         $data = AksesRole::where(['role_id' => $role_id, 'menu_id' => $menu_id])
                 ->count();
+        if($data){
+            return response()->json([
+                'success' => true,
+                'message' => 'Menu tersebut ada!',
+                'data' => $data
+            ], 200);
+        }
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Menu tersebut ada!',
-            'data' => $data
-        ], 200);
+        if(!$data){
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu tersebut tidak ada!',
+                'data' => ''
+            ], 200);
+        }
     }
 
     public function UbahAksesRole(Request $request, $id_role, $id_menu){
@@ -49,15 +58,20 @@ class AKsesRoleController extends Controller
             $model->role_id = $role_id;
             $model->menu_id = $menu_id;
             $model->save();
+            return response()->json([
+                'success' => true,
+                'message' => 'Akses role berhasil diubah!',
+                'data' => ''
+            ], 201);
         }else{
             $model::where(['role_id' => $role_id, 'menu_id' => $menu_id])->delete();
+            return response()->json([
+                'success' => true,
+                'message' => 'Akses role berhasil diubah!',
+                'data' => ''
+            ], 201);
+            
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => 'Akses role berhasil diubah!',
-            'data' => ''
-        ], 200);
     }
 
    

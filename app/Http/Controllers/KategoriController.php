@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use  App\Models\Kategori;
+use App\Models\Kategori;
 use Illuminate\Support\Facades\Validator;
 
 class KategoriController extends Controller
@@ -42,7 +42,7 @@ class KategoriController extends Controller
                     'success' => false,
                     'message' => 'Kategori gagal ditemukan!',
                     'data' => ''
-            ], 200);
+            ], 404);
         }
 
 
@@ -60,11 +60,17 @@ class KategoriController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Kategori gagal ditambahkan!',
+                'data' => [
+                    'nama_kategori' => $validator->errors()->first('nama_kategori')
+                ]
+            ], 422);
         }       
 
         $model = new Kategori;
-        $model->nama_kategori = $request->nama_kategori;
+        $model->nama_kategori = $request->input('nama_kategori');
         $model->save();
 
         if($model){
@@ -73,14 +79,6 @@ class KategoriController extends Controller
                 'message' => 'Kategori berhasil ditambahkan!',
                 'data' => ''
             ], 201);
-        }
-
-        if(!$model){
-            return response()->json([
-                'success' => false,
-                'message' => 'Kategori gagal ditambahkan!',
-                'data' => '',
-            ], 400);
         }
     }
 
@@ -94,11 +92,17 @@ class KategoriController extends Controller
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['data' => $validator->errors()->all()], 422);
+            return response()->json([
+                'success' => false,
+                'message' => 'Kategori gagal diubah!',
+                'data' => [
+                    'nama_kategori' => $validator->errors()->first('nama_kategori')
+                ]
+            ], 422);
         }
 
         $model = Kategori::find($id);
-        $model->nama_kategori = $request->nama_kategori;
+        $model->nama_kategori = $request->input('nama_kategori');
         $model->save();
 
         if($model){

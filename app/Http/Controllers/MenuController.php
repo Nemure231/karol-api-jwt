@@ -115,7 +115,7 @@ class MenuController extends Controller
         }       
 
         $model = new Menu;
-        $model->nama_menu = $request->nama_menu;
+        $model->nama_menu = $request->input('nama_menu');
         $model->save();
 
         if($model){
@@ -148,7 +148,7 @@ class MenuController extends Controller
         }
 
         $model = Menu::find($id);
-        $model->nama_menu = $request->nama_menu;
+        $model->nama_menu = $request->input('nama_menu');
         $model->save();
 
         if($model){
@@ -157,6 +157,14 @@ class MenuController extends Controller
                 'message' => 'Menu berhasil diubah!',
                 'data' => ''
             ], 201);
+        }
+
+        if(!$model){
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal diubah!',
+                'data' => ''
+            ], 400);
         }
 
     }
