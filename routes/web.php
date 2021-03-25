@@ -87,7 +87,6 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->get('akses/cek-akses/{role_id}/{uri_menu}', 'AksesRoleController@cekAksesUser');
 
         });
-
     });
 
     $router->group(['prefix' => 'suplai'], function () use ($router){
@@ -135,6 +134,20 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->put('ubah/{id}', 'SupplierController@ubahSupplier');
             $router->delete('hapus/{id}', 'SupplierController@hapusSupplier');
 
+        });
+    });
+
+    $router->group(['prefix' => 'tempat'], function () use ($router){
+        $router->group(['prefix' => 'karyawan'], function () use ($router){
+            $router->get('', 'KaryawanController@ambilKaryawan');
+            $router->post('tambah/{id}', 'KaryawanController@tambahKaryawan');
+            $router->put('ubah/{id}', 'KaryawanController@ubahKaryawan');
+            $router->delete('hapus/{id}', 'KaryawanController@hapusKaryawan');
+        });
+
+        $router->group(['prefix' => 'toko'], function () use ($router){
+            $router->get('', 'TokoController@ambilToko');
+            $router->put('ubah/{id}', 'TokoController@ubahToko');
         });
     });
 
