@@ -43,7 +43,7 @@ class AKsesRoleController extends Controller
                 'success' => false,
                 'message' => 'Menu tersebut tidak ada!',
                 'data' => ''
-            ], 404);
+            ], 401);
         }
     }
 
@@ -70,7 +70,7 @@ class AKsesRoleController extends Controller
                 'success' => false,
                 'message' => 'User tersebut tidak berhak mengakses menu!',
                 'data' => ''
-            ], 200);
+            ], 405);
         }
     }
 
