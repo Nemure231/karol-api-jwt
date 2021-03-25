@@ -58,7 +58,7 @@ class SubmenuController extends Controller
                     'nama_menu_utama', 'nama_submenu', 'url_submenu', 'ikon_submenu', 'status_submenu', 
                     'id_submenu', 'menu_utama_id')
                     ->get();
-        if(!$data){
+        if($data){
             return response()->json([
                     'success' => true,
                     'message' => 'Submenu barhasil ditemukan!',

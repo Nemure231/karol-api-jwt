@@ -24,8 +24,7 @@ class CreateBarangTable extends Migration
             $table->double('harga_pokok');
             $table->double('harga_konsumen');
             $table->double('harga_anggota');
-            $table->integer('stok_id')->index()->default(58);
-            $table->integer('stok_barag');
+            $table->integer('stok_barang');
             $table->timestamps();
         });
     }

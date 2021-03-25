@@ -92,6 +92,11 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
     $router->group(['prefix' => 'suplai'], function () use ($router){
 
+        $router->group(['prefix' => 'stok'], function () use ($router){
+            $router->get('cari/{min_stok}', 'StokController@cariStok');
+
+        });
+
         $router->group(['prefix' => 'barang'], function () use ($router){
             $router->get('', 'BarangController@ambilBarang');
             $router->post('tambah', 'BarangController@tambahBarang');
