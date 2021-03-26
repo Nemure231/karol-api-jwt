@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
-use  App\Models\User;
+use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
@@ -31,7 +31,21 @@ class UserController extends Controller
             ->join('role', 'users.role_id', '=', 'role.id_role')
             ->where('id', $id)
             ->first();
-        return response()->json(['data' =>  $data], 200);
+        if($data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'User barhasil ditemukan!',
+                    'data' => $data
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                    'success' => false,
+                    'message' => 'User gagal ditemukan!',
+                    'data' => ''
+            ], 404);
+        }
     }
 
     public function ambilSatuUser($id){
@@ -40,7 +54,21 @@ class UserController extends Controller
             ->where('id', $id)
             ->first();
 
-        return response()->json(['data' =>  $data], 200);
+        if($data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'User barhasil ditemukan!',
+                    'data' => $data
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                    'success' => false,
+                    'message' => 'User gagal ditemukan!',
+                    'data' => ''
+            ], 404);
+        }
     }
 
     public function ambilSatuUserUntukProfil($id){
@@ -49,7 +77,21 @@ class UserController extends Controller
             ->where('id', $id)
             ->first();
 
-        return response()->json(['data' =>  $data], 200);
+        if($data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'User barhasil ditemukan!',
+                    'data' => $data
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                    'success' => false,
+                    'message' => 'User gagal ditemukan!',
+                    'data' => ''
+            ], 404);
+        }
     }
 
     public function ubahUser(Request $request, $id){
@@ -66,7 +108,8 @@ class UserController extends Controller
                 'message' => 'User berhasil diubah!',
                 'data' => ''
             ], 201);
-        }else{
+        }
+        if(!$model){
             return response()->json([
                 'success' => false,
                 'message' => 'User gagal diubahh!',
@@ -80,7 +123,21 @@ class UserController extends Controller
         $data =  User::select('password')
             ->where('id', $id)
             ->first();
-        return response()->json(['data' =>  $data], 200);
+        if($data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'Sandi barhasil ditemukan!',
+                    'data' => $data
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                    'success' => false,
+                    'message' => 'Sandi gagal ditemukan!',
+                    'data' => ''
+            ], 404);
+        }
     }
 
     public function ubahSandi(Request $request, $id){

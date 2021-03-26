@@ -19,26 +19,26 @@ class AuthController extends Controller
     {
         $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
- 
+    
     public function register(Request $request){
-        // $validator = Validator::make($request->all(), [
-        //     'name' => 'required|string',
-        //     'email' => 'required|email|unique:users',
-        //     'password' => 'required|confirmed',
-        // ],[
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|confirmed',
+        ],[
 
-        //     'name.required' => 'Harus dipilih!',
-        //     'name.string' => 'Nama itu sudah ada!',
-        //     'email.required' => 'Email harus diisi',
-        //     'email.email' => 'Harus berformat email',
-        //     'email.unique' => 'Email itu sudah ada',
-        //     'password.required' => 'Password harus diisi',
-        //     'password.confirmed' => 'Konfirmasi password harus sama!'
-        // ]);
+            'name.required' => 'Harus dipilih!',
+            'name.string' => 'Nama itu sudah ada!',
+            'email.required' => 'Email harus diisi',
+            'email.email' => 'Harus berformat email',
+            'email.unique' => 'Email itu sudah ada',
+            'password.required' => 'Password harus diisi',
+            'password.confirmed' => 'Konfirmasi password harus sama!'
+        ]);
 
-        // if ($validator->fails()) {
-        //     return response()->json(['data' => $validator->errors()], 422);
-        // }        
+        if ($validator->fails()) {
+            return response()->json(['data' => $validator->errors()], 422);
+        }        
 
         //mengambil inputan untuk dimasukkan ke database
         $register = User::create([
@@ -58,12 +58,6 @@ class AuthController extends Controller
                 'message' => 'Registrasi berhasil!',
                 'data' => $register
             ], 201);
-        }else{
-            return response()->json([
-                'success' => false,
-                'message' => 'Registrasi gagal!',
-                'data' => '',
-            ], 400);
         }
     
     }

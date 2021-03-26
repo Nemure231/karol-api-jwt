@@ -140,7 +140,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
     $router->group(['prefix' => 'tempat'], function () use ($router){
         $router->group(['prefix' => 'karyawan'], function () use ($router){
             $router->get('', 'KaryawanController@ambilKaryawan');
-            $router->post('tambah/{id}', 'KaryawanController@tambahKaryawan');
+            $router->post('tambah', 'KaryawanController@tambahKaryawan');
             $router->put('ubah/{id}', 'KaryawanController@ubahKaryawan');
             $router->delete('hapus/{id}', 'KaryawanController@hapusKaryawan');
         });
