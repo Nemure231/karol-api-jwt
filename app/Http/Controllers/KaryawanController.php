@@ -49,7 +49,7 @@ class KaryawanController extends Controller
 
     public function tambahKaryawan(Request $request){
         $validator = Validator::make($request->all(), [
-            'name' => 'required|string',
+            'name' => 'required',
             'email' => 'required|email|unique:users',
             'password' => 'required|confirmed',
             'telepon' => 'required|numeric',
@@ -59,7 +59,6 @@ class KaryawanController extends Controller
         ],[
 
             'name.required' => 'Harus diisi!',
-            'name.string' => 'Nama itu sudah ada!',
             'email.required' => 'Harus diisi',
             'email.email' => 'Harus berformat email',
             'email.unique' => 'Email itu sudah ada',
@@ -88,22 +87,19 @@ class KaryawanController extends Controller
             ], 422);
         }        
 
-        //mengambil inputan untuk dimasukkan ke database
-        $register = User::create([
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'telepon' => $request->input('telepon'),
-            'alamat' => $request->input('alamat'),
-            'gambar' => $request->input('gambar'),
-            'role_id' => $request->input('role_id'),
-            'status' => $request->input('status')
-        ]);
+
+        $model = new User;
+        $model->name = $request->input('name');
+        $model->email = $request->input('email');
+        $model->password = Hash::make($request->input('password'));
+        $model->telepon = $request->input('telepon');
+        $model->alamat = $request->input('alamat');
+        $model->gambar = $request->input('gambar');
+        $model->role_id = $request->input('role_id');
+        $model->status = $request->input('status');
+        $model->save();
         //melakukan kondisi jika user berhasil terdaftar
-        if($register){
-
-            // $gambar->move('storage/app/karyawan', $request->input('gambar'));
-
+        if($model){
             return response()->json([
                 'success' => true,
                 'message' => 'Registrasi berhasil!',
@@ -111,6 +107,95 @@ class KaryawanController extends Controller
             ], 201);
         }
     
+    }
+
+    public function ubahKaryawan(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$id,
+            'telepon' => 'required|numeric',
+            'alamat' => 'required',
+            'gambar' => 'required',
+            'role_id' => 'required'
+        ],[
+
+            'name.required' => 'Harus diisi!',
+            'email.required' => 'Harus diisi',
+            'email.email' => 'Harus berformat email',
+            'email.unique' => 'Email itu sudah ada',
+            'telepon.required' => 'Harus diisi',
+            'telepon.required' => 'Harus angka!',
+            'alamat.required' => 'Harus diisi!',
+            'gambar.required' => 'Harus diisi!',
+            'role_id.required' => 'Harus dipilih!'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Karyawan gagal diubah!',
+                'data' => [
+                    'name' => $validator->errors()->first('name'),
+                    'email' => $validator->errors()->first('email'),
+                    'telepon' => $validator->errors()->first('telepon'),
+                    'alamat' => $validator->errors()->first('alamat'),
+                    'gambar' => $validator->errors()->first('gambar'),
+                    'role_id' => $validator->errors()->first('role_id')
+                ]
+            ], 422);
+        }        
+
+        //mengambil inputan untuk dimasukkan ke database
+
+        $model = User::find($id);
+        $model->name = $request->input('name');
+        $model->email = $request->input('email');
+        $model->telepon = $request->input('telepon');
+        $model->alamat = $request->input('alamat');
+        $model->gambar = $request->input('gambar');
+        $model->role_id = $request->input('role_id');
+        $model->status = $request->input('status');
+        $model->save();
+        
+        if($model){
+            return response()->json([
+                'success' => true,
+                'message' => 'Karyawan berhasil diubah!',
+                'data' => ''
+            ], 201);
+        }
+
+        if(!$model){
+            return response()->json([
+                'success' => true,
+                'message' => 'Karyawan gagal diubah!',
+                'data' => ''
+            ], 400);
+        }
+    
+    }
+
+    public function hapusKaryawan($id){
+
+        $model = User::find($id);
+        $model->delete();
+
+        if($model){
+            return response()->json([
+                'success' => true,
+                'message' => 'Karyawan berhasil dihapus!',
+                'data' => ''
+            ], 201);
+        }
+        
+        if(!$model){
+            return response()->json([
+                'success' => false,
+                'message' => 'Karyawan gagal dihapus!',
+                'data' => '',
+            ], 400);
+        }
+
     }
 
 }
