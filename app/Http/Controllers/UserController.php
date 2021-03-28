@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -96,6 +97,31 @@ class UserController extends Controller
 
     public function ubahUser(Request $request, $id){
 
+        $validator = Validator::make($request->all(), [
+            'name' =>  'required|unique:users,name,'.$id,
+            'telepon' => 'required|numeric',
+            'alamat' => 'required',
+        ],[
+            'name.required' => 'Harus diisi!',
+            'name.unique' => 'Nama itu sudah ada!',
+            'telepon.required' => 'Harus diisi!',
+            'telepon.numeric' => 'Harus angka!',
+            'alamat.required' => 'Harus diisi!',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal diubah!',
+                'data' => [
+                    'name' => $validator->errors()->first('name'),
+                    'telepon' => $validator->errors()->first('telepon'),
+                    'alamat' => $validator->errors()->first('alamat')
+                ]
+                
+            ], 422);
+        }
+
         $model = User::find($id);
         $model->name = $request->input('name');
         $model->telepon = $request->input('telepon');
@@ -141,6 +167,28 @@ class UserController extends Controller
     }
 
     public function ubahSandi(Request $request, $id){
+
+        $validator = Validator::make($request->all(), [
+            'sandi_lama' =>  'required',
+            'sandi_baru' => 'required|min:8|confirmed',
+        ],[
+            'sandi_lama.required' => 'Harus diisi!',
+            'sandi_baru.required' => 'Harus diisi',
+            'sandi_baru.min' => 'Terlalu pendek!',
+            'sandi_baru.confirmed' => 'Konfirmasi sandi harus sama dengan sandi baru!'
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Menu gagal diubah!',
+                'data' => [
+                    'sandi_lama' => $validator->errors()->first('sandi_lama'),
+                    'sandi_baru' => $validator->errors()->first('sandi_baru'),
+                ]
+                
+            ], 422);
+        }
       
 		$sandi = User::find($id);
 		$sandi_lama = $request->input('sandi_lama');
