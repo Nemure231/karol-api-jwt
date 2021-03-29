@@ -9,7 +9,7 @@ use App\Models\Menu;
 use lluminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 
-class AKsesRoleController extends Controller
+class AksesRoleController extends Controller
 {
      /**
      * Instantiate a new UserController instance.
