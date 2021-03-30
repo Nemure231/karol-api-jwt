@@ -8,6 +8,10 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Http\File;
+use Illuminate\Support\Facades\Storage;
+
+
 
 class KaryawanController extends Controller
 {
@@ -32,11 +36,17 @@ class KaryawanController extends Controller
             ->join('role', 'users.role_id', '=', 'role.id_role')
             ->get();
         if($data){
+
+            $index = 0;
+            foreach ($data as $d):
+                $result =data_fill($data, $index.'.url_gambar', asset('gambar/public').'/'.$d['gambar']);
+                $index++;
+            endforeach;
+
             return response()->json([
                     'success' => true,
-                    // 'url' => route('storage/app/gambar/karyawan/1617009047_1616942332037.png'),
                     'message' => 'Karyawan barhasil ditemukan!',
-                    'data' => $data
+                    'data' => $result,
             ], 200);
         }
     
@@ -90,20 +100,19 @@ class KaryawanController extends Controller
                     'role_id' => $validator->errors()->first('role_id')
                 ]
             ], 422);
-        }        
-
-        if ($request->hasFile('gambar')) {
-
-            if ($request->file('gambar')->isValid()) {
-
-                $file = $request->file('gambar');
-                $nama_gambar = time().'_'.Str::of($file->getClientOriginalName())->trim();
-                $file->move(storage_path('/app/gambar/karyawan'), $nama_gambar);
-            }
         }
 
-        if (!$request->hasFile('gambar')) {
-            $nama_gambar = 'default.png';
+        $gambar = $request->file('gambar');
+        $nama_file = $gambar->getClientOriginalName();
+
+    
+        if ($gambar->isValid()) {
+            if ($nama_file != 'default.png'){         
+                $nama_gambar = time().'_'.preg_replace('/\s+/', '_', $nama_file);
+                $gambar->storeAs('public', $nama_gambar);    
+            }else{
+                $nama_gambar = 'default.png';
+            }
         }
 
         $model = new User;
@@ -116,7 +125,7 @@ class KaryawanController extends Controller
         $model->role_id = $request->input('role_id');
         $model->status = $request->input('status');
         $model->save();
-        //melakukan kondisi jika user berhasil terdaftar
+        
         if($model){
             return response()->json([
                 'success' => true,
@@ -130,7 +139,6 @@ class KaryawanController extends Controller
     
         $data = User::select('gambar')->where('id', $id)->first();
         $path = '/app/gambar/karyawan';
-
         $avatar_path = storage_path($path).'/'.$data['gambar'];
         if (file_exists($avatar_path)) {
             
@@ -162,7 +170,7 @@ class KaryawanController extends Controller
             'email' => 'required|email|unique:users,email,'.$id,
             'telepon' => 'required|numeric',
             'alamat' => 'required',
-            'gambar' => 'required',
+            'gambar' => 'image|max:1024|mimes:jpg,jepg,png|mimetypes:image/jpg,image/jpeg,image/png',
             'role_id' => 'required'
         ],[
 
@@ -173,7 +181,10 @@ class KaryawanController extends Controller
             'telepon.required' => 'Harus diisi',
             'telepon.required' => 'Harus angka!',
             'alamat.required' => 'Harus diisi!',
-            'gambar.required' => 'Harus diisi!',
+            'gambar.image' => 'Harus gambar!',
+            'gambar.max' => 'Minimal upload 1MB!',
+            'gambar.mimes' => 'Tipe file tersebut bukan gambar!',
+            'gambar.mimetype' => 'Tipe file tersebut bukan gambar!',
             'role_id.required' => 'Harus dipilih!'
         ]);
 
@@ -192,14 +203,33 @@ class KaryawanController extends Controller
             ], 422);
         }        
 
-        //mengambil inputan untuk dimasukkan ke database
+        $gambar = $request->file('gambar');
+        $nama_file = $gambar->getClientOriginalName();
+
+        // if ($request->hasFile('gambar')) {
+        
+            if ($gambar->isValid()) {
+                if ($nama_file != 'default.png'){
+
+                    $gambar_lama = User::select('gambar')->where('id', $id)->first();
+                    Storage::disk('public')->delete('/'.$gambar_lama['gambar']);
+
+                    $nama_gambar = time().'_'.preg_replace('/\s+/', '_', $nama_file);
+                    $gambar->storeAs('public', $nama_gambar);
+                    
+                }else{
+                    $gambar_lama = User::select('gambar')->where('id', $id)->first();
+                    $nama_gambar = $gambar_lama['gambar'];
+                }
+            }
+        // }
 
         $model = User::find($id);
         $model->name = $request->input('name');
         $model->email = $request->input('email');
         $model->telepon = $request->input('telepon');
         $model->alamat = $request->input('alamat');
-        $model->gambar = $request->input('gambar');
+        $model->gambar = $nama_gambar;
         $model->role_id = $request->input('role_id');
         $model->status = $request->input('status');
         $model->save();
@@ -224,8 +254,13 @@ class KaryawanController extends Controller
 
     public function hapusKaryawan($id){
 
-        $model = User::find($id);
-        $model->delete();
+        $gambar_lama = User::select('gambar')->where('id', $id)->first();
+
+        if($gambar_lama['gambar'] != 'default.png'){
+            Storage::disk('public')->delete('/'.$gambar_lama['gambar']);
+        }
+            $model = User::find($id);
+            $model->delete();
 
         if($model){
             return response()->json([
