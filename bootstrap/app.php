@@ -23,7 +23,8 @@ date_default_timezone_set(env('APP_TIMEZONE', 'UTC'));
 $app = new Laravel\Lumen\Application(
     dirname(__DIR__)
 );
-$app->register(GrahamCampbell\Flysystem\FlysystemServiceProvider::class);
+
+
 
 $app->withFacades();
 
@@ -34,6 +35,13 @@ $app->withFacades();
 
 $app->withEloquent();
 
+$app->singleton('filesystem', function ($app) {
+    return $app->loadComponent(
+        'filesystems',
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        'filesystem'
+    );
+});
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -70,6 +78,7 @@ $app->configure('app');
 
 //jwt config
 $app->configure('jwt');
+$app->configure('filesystems');
 // $app->configure('auth');
 
 /*
@@ -109,6 +118,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 
 //register jwt
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Illuminate\Filesystem\FilesystemServiceProvider::class);
 
 /*
 |--------------------------------------------------------------------------
