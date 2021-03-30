@@ -143,7 +143,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->post('tambah', 'KaryawanController@tambahKaryawan');
             $router->put('ubah/{id}', 'KaryawanController@ubahKaryawan');
             $router->delete('hapus/{id}', 'KaryawanController@hapusKaryawan');
-            $router->get('gambar/{gambar}', 'KaryawanController@ambilGambar');
+            $router->get('gambar/{id}', 'KaryawanController@ambilGambar');
         });
 
         $router->group(['prefix' => 'toko'], function () use ($router){
