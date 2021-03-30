@@ -7,10 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-use GrahamCampbell\Flysystem\Facades\Flysystem;
-use App\Libraries\Helper;
 
 class KaryawanController extends Controller
 {
@@ -21,7 +18,7 @@ class KaryawanController extends Controller
      */
     public function __construct()
     {
-        // $this->middleware('auth');
+        $this->middleware('auth');
     }
 
     /**
@@ -102,11 +99,6 @@ class KaryawanController extends Controller
                 $file = $request->file('gambar');
                 $nama_gambar = time().'_'.Str::of($file->getClientOriginalName())->trim();
                 $file->move(storage_path('/app/gambar/karyawan'), $nama_gambar);
-                // Flysystem::put($file, $nama_gambar);
-                // Flysystem::read('hi.txt');
-                // $nama_gambar = $request->gambar->getClientOriginalName();
-                // Storage::disk('local')->put($request->nama_gambar, 'Contents');
-                // $request->gambar->storeAs('storage/app', $nama_gambar);
             }
         }
 
@@ -134,27 +126,32 @@ class KaryawanController extends Controller
         }
     }
 
-    public function ambilGambar($gambar){
-    // $path = '/app/gambar/karyawan';
-    $avatar_path = storage_path($path).'/'.$gambar;
-    if (file_exists($avatar_path)) {
-        $url = file_get_contents($avatar_path);
+    public function ambilGambar($id){
+    
+        $data = User::select('gambar')->where('id', $id)->first();
+        $path = '/app/gambar/karyawan';
 
-        return response($url, 200)->header('Content-Type', 'image/jpeg');
-        // return response()->json([
-        //     'success' => true,
-        //     'message' => 'Gambar barhasil ditemukan!',
-        //     'data' => 'http://localhost:8000/api/tempat/karyawan/gambar/'.$gambar
-        // ], 200)->header('Content-Type', 'image/jpeg');
-    }
+        $avatar_path = storage_path($path).'/'.$data['gambar'];
+        if (file_exists($avatar_path)) {
+            
+            $type = pathinfo($avatar_path, PATHINFO_EXTENSION);
+            $dat = file_get_contents($avatar_path);
+            $base64 = 'data:image/' . $type . ';base64,' . base64_encode($dat);
 
-    if (!file_exists($avatar_path)) {
-        return response()->json([
-            'success' => false,
-            'message' => 'Gambar tidak ditemukan!',
-            'data' => ''
-        ], 200);
-    }
+            return response()->json([
+                'success' => true,
+                'message' => 'Gambar barhasil ditemukan!',
+                'data' => $base64
+            ], 200);
+        }
+
+        if (!file_exists($avatar_path)) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Gambar tidak ditemukan!',
+                'data' => ''
+            ], 200);
+        }
 
     }
 
