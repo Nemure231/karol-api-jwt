@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
+use Illuminate\Http\File;
 // use League\Flysystem\Filesystem;
 // use League\Flysystem\Adapter\Local;
 // use League\Flysystem\FilesystemInterface;
@@ -99,22 +100,25 @@ class KaryawanController extends Controller
             ], 422);
         }
 
-    
-        if ($request->file('gambar')->getClientOriginalName() != 'default.png'){
+        $gambar = $request->file('gambar');
+        $nama_file = $gambar->getClientOriginalName();
 
-            // if ($request->file('gambar')->isValid()) {
-                $file = $request->file('gambar');
-                $name = $file->getClientOriginalName();
-                $nama_gambar = time().'_'.Str::of($name)->trim();
-                $file->move(storage_path('/app/public'), $nama_gambar);
-            // }
-        }else{
+        if ($request->hasFile('gambar')) {
+        
+            if ($gambar->isValid()) {
+                if ($nama_file != 'default.png'){
 
-            $nama_gambar = 'default.png';
+                    $nama_gambar = time().'_'.Str::slug($nama_file, '_');
+                    $gambar->storeAs('public', $nama_gambar);    
+                }else{
+                    $nama_gambar = 'default.png';
+                }
+            }
         }
 
-        // Storage::disk('public')->put($request->file('gambar'), 'image/jpeg');
-        // $nama_gambar = $request->file('gambar')->getClientOriginalName();
+        if (!$request->hasFile('gambar')) {
+            $nama_gambar = 'default.png';
+        }
 
         $model = new User;
         $model->name = $request->input('name');

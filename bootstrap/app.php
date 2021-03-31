@@ -34,7 +34,6 @@ $app->withFacades();
 // ]);
 
 $app->withEloquent();
-
 $app->singleton('filesystem', function ($app) {
     return $app->loadComponent(
         'filesystems',
