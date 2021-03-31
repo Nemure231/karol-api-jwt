@@ -1,20 +1,16 @@
 <?php
 
-namespace App\Libraries;
 
-class Helper {
- 
-
-    // if (!function_exists('urlGenerator')) {
+    if (!function_exists('urlGenerator')) {
         /**
          * @return \Laravel\Lumen\Routing\UrlGenerator
          */
         function urlGenerator() {
             return new \Laravel\Lumen\Routing\UrlGenerator(app());
         }
-    // }
+    }
     
-    // if (!function_exists('asset')) {
+    if (!function_exists('asset')) {
         /**
          * @param $path
          * @param bool $secured
@@ -24,8 +20,7 @@ class Helper {
         function asset($path, $secured = false) {
             return urlGenerator()->asset($path, $secured);
         }
-    // }
+    }
 
 
 
-}
