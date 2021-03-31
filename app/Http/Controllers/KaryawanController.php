@@ -39,11 +39,17 @@ class KaryawanController extends Controller
             ->join('role', 'users.role_id', '=', 'role.id_role')
             ->get();
         if($data){
+
+            $index = 0;
+            foreach ($data as $d):
+                $result =data_fill($data, $index.'.url_gambar', asset('gambar/public').'/'.$d['gambar']);
+                $index++;
+            endforeach;
+
             return response()->json([
                     'success' => true,
                     'message' => 'Karyawan barhasil ditemukan!',
-                    'data' => $data,
-                    'dum' =>  Storage::url('1617121011_Outcast_Désir(1).png')
+                    'data' => $result,
             ], 200);
         }
     
