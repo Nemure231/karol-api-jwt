@@ -204,7 +204,7 @@ class KaryawanController extends Controller
         $gambar = $request->file('gambar');
         $nama_file = $gambar->getClientOriginalName();
 
-        // if ($request->hasFile('gambar')) {
+
         
             if ($gambar->isValid()) {
                 if ($nama_file != 'default.png'){
@@ -220,7 +220,6 @@ class KaryawanController extends Controller
                     $nama_gambar = $gambar_lama['gambar'];
                 }
             }
-        // }
 
         $model = User::find($id);
         $model->name = $request->input('name');
