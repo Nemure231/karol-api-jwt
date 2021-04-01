@@ -32,11 +32,14 @@ class UserController extends Controller
             ->join('role', 'users.role_id', '=', 'role.id_role')
             ->where('id', $id)
             ->first();
+
+        $result = data_fill($data, 'url_gambar', asset('gambar/public').'/'.$data['gambar']);
+            
         if($data){
             return response()->json([
                     'success' => true,
                     'message' => 'User barhasil ditemukan!',
-                    'data' => $data
+                    'data' => $result
             ], 200);
         }
 
@@ -50,7 +53,7 @@ class UserController extends Controller
     }
 
     public function ambilSatuUser($id){
-
+        
         $data =  User::select('name', 'telepon', 'email', 'gambar', 'alamat')
             ->where('id', $id)
             ->first();
@@ -73,16 +76,17 @@ class UserController extends Controller
     }
 
     public function ambilSatuUserUntukProfil($id){
-
         $data =  User::select('name', 'gambar')
             ->where('id', $id)
             ->first();
+        
+        $result = data_fill($data, 'url_gambar', asset('gambar/public').'/'.$data['gambar']);
 
         if($data){
             return response()->json([
                     'success' => true,
                     'message' => 'User barhasil ditemukan!',
-                    'data' => $data
+                    'data' => $result
             ], 200);
         }
 
