@@ -14,7 +14,7 @@ class Toko extends Model{
     protected $table = 'toko';
     protected $primaryKey = 'id_toko';
     protected $fillable = [
-        'nama_toko', 'alamat_toko', 'telepon_toko', 'email_toko', 'logo_toko'
+        'nama_toko', 'alamat_toko', 'telepon_toko', 'email_toko', 'logo_toko', 'logo_koperasi'
     ];
 
     
