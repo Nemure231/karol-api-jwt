@@ -22,7 +22,7 @@ class KaryawanController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        // $this->middleware('auth');
     }
 
     /**
@@ -113,7 +113,6 @@ class KaryawanController extends Controller
                 $nama_gambar = 'default.png';
             }
         }
-     
         $model = new User;
         $model->name = $request->input('name');
         $model->email = $request->input('email');
