@@ -50,6 +50,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->get('untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
             $router->get('untuk-role-akses', 'MenuController@ambilMenuUntukDaftarRoleAkses');
             $router->get('', 'MenuController@ambilMenu');
+            
             $router->post('tambah', 'MenuController@tambahMenu');
             $router->put('ubah/{id}', 'MenuController@ubahMenu');
             $router->delete('hapus/{id}', 'MenuController@hapusMenu');
@@ -74,9 +75,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
     $router->group(['prefix' => 'role'], function () use ($router){
         $router->get('', 'RoleController@ambilRole');
-        $router->post('tambah', 'RoleController@tambahRole');
-        $router->put('ubah/{id}', 'RoleController@ubahRole');
-        $router->delete('hapus/{id}', 'RoleController@hapusRole');
+        $router->post('', 'RoleController@tambahRole');
+        $router->put('{id}', 'RoleController@ubahRole');
+        $router->delete('{id}', 'RoleController@hapusRole');
         $router->get('cek-centang/{id}', 'RoleController@ambilRoleUntukCekCentangAksesRole');
 
         $router->post('akses', 'AksesRoleController@ubahAksesRole');
@@ -102,9 +103,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'kategori'], function () use ($router){
             $router->get('', 'KategoriController@ambilKategori');
-            $router->post('tambah', 'KategoriController@tambahKategori');
-            $router->put('ubah/{id}', 'KategoriController@ubahKategori');
-            $router->delete('hapus/{id}', 'KategoriController@hapusKategori');
+            $router->post('', 'KategoriController@tambahKategori');
+            $router->put('{id}', 'KategoriController@ubahKategori');
+            $router->delete('{id}', 'KategoriController@hapusKategori');
 
         });
 
