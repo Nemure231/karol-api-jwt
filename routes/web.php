@@ -148,6 +148,14 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->put('{id}', 'TokoController@ubahToko');
         });
 
+        $router->group(['prefix' => 'kode'], function () use ($router){
+            $router->group(['prefix' => 'barang'], function () use ($router){
+                $router->get('', 'KodeBarangController@ambilKodeBarang');
+                $router->put('{id}', 'KodeBarangController@ubahKodeBarang');
+            });
+            
+        });
+
 
 
 
