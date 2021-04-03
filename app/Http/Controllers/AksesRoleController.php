@@ -49,6 +49,7 @@ class AksesRoleController extends Controller
 
     public function cekAksesUser($role_id, $uri_menu){
 
+
         $menu = Menu::select('id_menu')
                 ->where('nama_menu', $uri_menu)
                 ->first();
@@ -74,13 +75,14 @@ class AksesRoleController extends Controller
         }
     }
 
-    public function ubahAksesRole(Request $request, $id_role, $id_menu){
-        $data = AksesRole::where(['role_id' => $id_role, 'menu_id' => $id_menu])
-                ->count();
+    public function ubahAksesRole(Request $request){
 
         $menu_id = $request->menu_id;
         $role_id = $request->role_id;
-            
+
+        $data = AksesRole::where(['role_id' => $role_id, 'menu_id' => $menu_id])
+                ->count();
+
         $model = new AksesRole;
         if($data < 1){
             $model->role_id = $role_id;

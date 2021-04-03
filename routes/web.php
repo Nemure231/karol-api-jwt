@@ -31,7 +31,6 @@ $router->group(['prefix' => 'api'], function () use ($router){
         $router->get('me', 'AuthController@me');
     });
 
-    $router->group(['prefix' => 'akun'], function () use ($router){
         $router->group(['prefix' => 'profil'], function () use ($router){
             $router->get('{id}', 'UserController@ambilSatuUser');
             $router->get('untuk-profil/{id}', 'UserController@ambilSatuUserUntukProfil');
@@ -43,10 +42,10 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->get('{id}', 'UserController@ambilSatuSandi');
             $router->put('ubah/{id}', 'UserController@ubahSandi');
         });
-    });
 
 
-    $router->group(['prefix' => 'pengaturan'], function () use ($router){
+
+
         $router->group(['prefix' => 'menu'], function () use ($router){
             $router->get('untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
             $router->get('untuk-role-akses', 'MenuController@ambilMenuUntukDaftarRoleAkses');
@@ -73,23 +72,20 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->delete('hapus/{id}', 'SubmenuController@hapusSubmenu');
         });
 
+    $router->group(['prefix' => 'role'], function () use ($router){
+        $router->get('', 'RoleController@ambilRole');
+        $router->post('tambah', 'RoleController@tambahRole');
+        $router->put('ubah/{id}', 'RoleController@ubahRole');
+        $router->delete('hapus/{id}', 'RoleController@hapusRole');
+        $router->get('cek-centang/{id}', 'RoleController@ambilRoleUntukCekCentangAksesRole');
 
-        $router->group(['prefix' => 'role'], function () use ($router){
-            $router->get('', 'RoleController@ambilRole');
-            $router->post('tambah', 'RoleController@tambahRole');
-            $router->put('ubah/{id}', 'RoleController@ubahRole');
-            $router->delete('hapus/{id}', 'RoleController@hapusRole');
-            $router->get('cek-centang/{id}', 'RoleController@ambilRoleUntukCekCentangAksesRole');
+        $router->post('akses', 'AksesRoleController@ubahAksesRole');
+        $router->get('akses/cek-centang/{role_id}/{menu_id}', 'AksesRoleController@cekCentangAksesRole');
+        $router->get('akses/cek-akses/{role_id}/{uri_menu}', 'AksesRoleController@cekAksesUser');
 
-
-            $router->get('akses/cek-centang/{role_id}/{menu_id}', 'AksesRoleController@cekCentangAksesRole');
-            $router->post('akses/ubah/{id_role}/{id_menu}', 'AksesRoleController@ubahAksesRole');
-            $router->get('akses/cek-akses/{role_id}/{uri_menu}', 'AksesRoleController@cekAksesUser');
-
-        });
     });
 
-    $router->group(['prefix' => 'suplai'], function () use ($router){
+    
 
         $router->group(['prefix' => 'stok'], function () use ($router){
             $router->get('cari/{min_stok}', 'StokController@cariStok');
@@ -98,9 +94,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'barang'], function () use ($router){
             $router->get('', 'BarangController@ambilBarang');
-            $router->post('tambah', 'BarangController@tambahBarang');
-            $router->put('ubah/{id}', 'BarangController@ubahBarang');
-            $router->delete('hapus/{id}', 'BarangController@hapusBarang');
+            $router->post('', 'BarangController@tambahBarang');
+            $router->put('{id}', 'BarangController@ubahBarang');
+            $router->delete('{id}', 'BarangController@hapusBarang');
 
         });
 
@@ -135,22 +131,21 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->delete('hapus/{id}', 'SupplierController@hapusSupplier');
 
         });
-    });
 
-    $router->group(['prefix' => 'tempat'], function () use ($router){
+
+
         $router->group(['prefix' => 'karyawan'], function () use ($router){
             $router->get('', 'KaryawanController@ambilKaryawan');
-            $router->post('tambah', 'KaryawanController@tambahKaryawan');
-            $router->put('ubah/{id}', 'KaryawanController@ubahKaryawan');
-            $router->delete('hapus/{id}', 'KaryawanController@hapusKaryawan');
-            $router->get('gambar/{id}', 'KaryawanController@ambilGambar');
+            $router->post('', 'KaryawanController@tambahKaryawan');
+            $router->put('{id}', 'KaryawanController@ubahKaryawan');
+            $router->delete('{id}', 'KaryawanController@hapusKaryawan');
         });
 
         $router->group(['prefix' => 'toko'], function () use ($router){
             $router->get('', 'TokoController@ambilToko');
             $router->put('ubah/{id}', 'TokoController@ubahToko');
         });
-    });
+
 
 
 
