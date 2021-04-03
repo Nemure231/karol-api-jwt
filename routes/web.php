@@ -68,9 +68,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
         $router->group(['prefix' => 'submenu'], function () use ($router){
             $router->get('untuk-sidebar/{menu_id}/{menu_utama_id}', 'SubmenuController@ambilSubmenuUntukSidebar');
             $router->get('', 'SubmenuController@ambilSubmenu');
-            $router->post('tambah', 'SubmenuController@tambahSubmenu');
-            $router->put('ubah/{id}', 'SubmenuController@ubahSubmenu');
-            $router->delete('hapus/{id}', 'SubmenuController@hapusSubmenu');
+            $router->post('', 'SubmenuController@tambahSubmenu');
+            $router->put('{id}', 'SubmenuController@ubahSubmenu');
+            $router->delete('{id}', 'SubmenuController@hapusSubmenu');
         });
 
     $router->group(['prefix' => 'role'], function () use ($router){
