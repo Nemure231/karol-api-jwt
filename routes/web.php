@@ -119,9 +119,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'merek'], function () use ($router){
             $router->get('', 'MerekController@ambilMerek');
-            $router->post('tambah', 'MerekController@tambahMerek');
-            $router->put('ubah/{id}', 'MerekController@ubahMerek');
-            $router->delete('hapus/{id}', 'MerekController@hapusMerek');
+            $router->post('', 'MerekController@tambahMerek');
+            $router->put('{id}', 'MerekController@ubahMerek');
+            $router->delete('{id}', 'MerekController@hapusMerek');
 
         });
 
