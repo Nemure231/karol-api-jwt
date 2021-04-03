@@ -58,11 +58,11 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'menu_utama'], function () use ($router){
             $router->get('untuk-sidebar/{id}', 'MenuUtamaController@ambilMenuUtamaUntukSidebar');
-            $router->get('', 'MenuUtamaController@ambilMenuUtamaJoinMenu');
             $router->get('untuk-submenu', 'MenuUtamaController@ambilMenuUtamaUntukSubmenu');
-            $router->post('tambah', 'MenuUtamaController@tambahMenuUtama');
-            $router->put('ubah/{id}', 'MenuUtamaController@ubahMenuUtama');
-            $router->delete('hapus/{id}', 'MenuUtamaController@hapusMenuUtama');
+            $router->get('', 'MenuUtamaController@ambilMenuUtamaJoinMenu');
+            $router->post('', 'MenuUtamaController@tambahMenuUtama');
+            $router->put('{id}', 'MenuUtamaController@ubahMenuUtama');
+            $router->delete('{id}', 'MenuUtamaController@hapusMenuUtama');
         });
         
         $router->group(['prefix' => 'submenu'], function () use ($router){
