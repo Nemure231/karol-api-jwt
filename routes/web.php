@@ -111,9 +111,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'satuan'], function () use ($router){
             $router->get('', 'SatuanController@ambilSatuan');
-            $router->post('tambah', 'SatuanController@tambahSatuan');
-            $router->put('ubah/{id}', 'SatuanController@ubahSatuan');
-            $router->delete('hapus/{id}', 'SatuanController@hapusSatuan');
+            $router->post('', 'SatuanController@tambahSatuan');
+            $router->put('{id}', 'SatuanController@ubahSatuan');
+            $router->delete('{id}', 'SatuanController@hapusSatuan');
 
         });
 
