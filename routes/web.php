@@ -49,11 +49,11 @@ $router->group(['prefix' => 'api'], function () use ($router){
         $router->group(['prefix' => 'menu'], function () use ($router){
             $router->get('untuk-sidebar/{id}', 'MenuController@ambilMenuUntukSidebar');
             $router->get('untuk-role-akses', 'MenuController@ambilMenuUntukDaftarRoleAkses');
-            $router->get('', 'MenuController@ambilMenu');
             
-            $router->post('tambah', 'MenuController@tambahMenu');
-            $router->put('ubah/{id}', 'MenuController@ubahMenu');
-            $router->delete('hapus/{id}', 'MenuController@hapusMenu');
+            $router->get('', 'MenuController@ambilMenu');
+            $router->post('', 'MenuController@tambahMenu');
+            $router->put('{id}', 'MenuController@ubahMenu');
+            $router->delete('{id}', 'MenuController@hapusMenu');
         });
 
         $router->group(['prefix' => 'menu_utama'], function () use ($router){
