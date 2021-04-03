@@ -16,6 +16,7 @@ class Supplier extends Model{
     protected $fillable = [
         'nama_supplier',
     ];
+    public $timestamps = false;
 
     
 

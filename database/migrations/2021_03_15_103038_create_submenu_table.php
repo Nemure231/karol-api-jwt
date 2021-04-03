@@ -21,7 +21,7 @@ class CreateSubmenuTable extends Migration
             $table->string('url_submenu', 20);
             $table->string('ikon_submenu', 50);
             $table->integer('status_submenu')->length(1);
-            $table->timestamps();
+            
         });
     }
 

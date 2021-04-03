@@ -16,6 +16,7 @@ class Toko extends Model{
     protected $fillable = [
         'nama_toko', 'alamat_toko', 'telepon_toko', 'email_toko', 'logo_toko', 'logo_koperasi'
     ];
+    public $timestamps = false;
 
     
 

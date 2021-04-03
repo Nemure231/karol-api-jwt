@@ -17,7 +17,7 @@ class CreateKodeBarangTable extends Migration
             $table->increments('id_kode_barang');
             $table->string('huruf_kode_barang', 30);
             $table->integer('jumlah_kode_barang');
-            $table->timestamps();
+        
         });
     }
 

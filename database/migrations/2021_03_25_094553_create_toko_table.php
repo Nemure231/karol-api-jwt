@@ -19,7 +19,7 @@ class CreateTokoTable extends Migration
             $table->string('telepon_toko', 16);
             $table->text('alamat_toko');
             $table->string('logo_toko', 30);
-            $table->timestamps();
+            
         });
     }
 

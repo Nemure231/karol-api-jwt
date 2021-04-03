@@ -115,8 +115,8 @@ class SubmenuController extends Controller
         }else{
             $id_menu = Menu::insertGetId([
                 'nama_menu' => $menu_id,
-                'created_at' => date('Y-m-d H:i:s'), 
-                'updated_at' => date('Y-m-d H:i:s')
+                
+                
             ]);
         }
         
@@ -129,8 +129,8 @@ class SubmenuController extends Controller
                 'menu_id' => $id_menu,
                 'nama_menu_utama' => $menu_utama_id, 
                 'ikon_menu_utama' => $ikon,
-                'created_at' => date('Y-m-d H:i:s'), 
-                'updated_at' => date('Y-m-d H:i:s')
+                
+                
             ]);
         }
 
@@ -194,8 +194,8 @@ class SubmenuController extends Controller
         }else{
             $id_menu = Menu::insertGetId([
                 'nama_menu' => $menu_id,
-                'created_at' => date('Y-m-d H:i:s'), 
-                'updated_at' => date('Y-m-d H:i:s')
+                
+                
             ]);
         }
         
@@ -208,8 +208,8 @@ class SubmenuController extends Controller
                 'menu_id' => $id_menu,
                 'nama_menu_utama' => $menu_utama_id, 
                 'ikon_menu_utama' => $ikon,
-                'created_at' => date('Y-m-d H:i:s'), 
-                'updated_at' => date('Y-m-d H:i:s')
+                
+                
             ]);
         }
 

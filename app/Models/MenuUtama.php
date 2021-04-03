@@ -16,6 +16,8 @@ class MenuUtama extends Model{
     protected $fillable = [
         'menu_id', 'nama_menu_utama', 'ikon_menu_utama'
     ];
+    public $timestamps = false;
+
 
     
 

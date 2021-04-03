@@ -19,6 +19,8 @@ class Role extends Model
         'nama_role'
     ];
 
+    public $timestamps = false;
+
    
 
 }

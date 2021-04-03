@@ -16,7 +16,7 @@ class CreateMenuTables extends Migration
         Schema::create('menu', function (Blueprint $table) {
             $table->increments('id_menu');
             $table->string('nama_menu', 20)->unique();
-            $table->timestamps();
+           
         });
     }
 

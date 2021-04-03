@@ -16,6 +16,8 @@ class Merek extends Model{
     protected $fillable = [
         'nama_merek',
     ];
+    
+    public $timestamps = false;
 
     
 

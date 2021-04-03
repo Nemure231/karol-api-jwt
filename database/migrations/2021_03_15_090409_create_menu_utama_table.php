@@ -18,7 +18,7 @@ class CreateMenuUtamaTable extends Migration
             $table->integer('menu_id')->length('3')->index();
             $table->string('nama_menu_utama', 20);
             $table->string('ikon_menu_utama', 50);
-            $table->timestamps();
+           
         });
 
     }

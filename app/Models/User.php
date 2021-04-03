@@ -53,12 +53,4 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     }
     
 
-    // public function getAuthIdentifierName(){ 
-    //     return $this->id; 
-    // } 
-        
-    // public function getAuthIdentifier(){ 
-    //     return $this->{$this->getAuthIdentifierName()}; 
-    // }
-
 }

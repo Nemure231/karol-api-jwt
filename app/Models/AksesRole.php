@@ -17,6 +17,9 @@ class AksesRole extends Model{
         'menu_id', 'role_id'
     ];
 
+    public $timestamps = false;
+
+
     
 
 }

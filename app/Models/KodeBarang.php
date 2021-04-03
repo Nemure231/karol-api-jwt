@@ -17,6 +17,9 @@ class KodeBarang extends Model{
         'nama_kode_barang', 'jumlah_kode_barang'
     ];
 
+    public $timestamps = false;
+
+
     
 
 }

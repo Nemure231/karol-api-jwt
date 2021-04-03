@@ -16,6 +16,7 @@ class Satuan extends Model{
     protected $fillable = [
         'nama_satuan',
     ];
+    public $timestamps = false;
 
     
 

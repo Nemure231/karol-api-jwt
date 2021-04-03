@@ -16,6 +16,7 @@ class Submenu extends Model{
     protected $fillable = [
         'menu_id', 'menu_utama_id' ,'nama_submenu', 'url_submenu', 'ikon_submenu', 'status_submenu'
     ];
+    public $timestamps = false;
 
     
 

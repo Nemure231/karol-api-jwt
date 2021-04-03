@@ -17,7 +17,7 @@ class CreateAksesMenuTable extends Migration
             $table->increments('id_akses_role');
             $table->integer('menu_id')->length('3')->index();
             $table->integer('role_id')->length('3')->index();
-            $table->timestamps();
+            
         });
     }
 

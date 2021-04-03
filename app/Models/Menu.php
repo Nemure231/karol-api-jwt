@@ -17,6 +17,9 @@ class Menu extends Model{
         'nama_menu',
     ];
 
+    public $timestamps = false;
+
+
     
 
 }

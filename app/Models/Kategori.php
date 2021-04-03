@@ -17,6 +17,9 @@ class Kategori extends Model{
         'nama_kategori',
     ];
 
+    public $timestamps = false;
+
+
     
 
 }
