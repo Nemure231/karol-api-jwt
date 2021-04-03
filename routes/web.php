@@ -127,9 +127,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'supplier'], function () use ($router){
             $router->get('', 'SupplierController@ambilSupplier');
-            $router->post('tambah', 'SupplierController@tambahSupplier');
-            $router->put('ubah/{id}', 'SupplierController@ubahSupplier');
-            $router->delete('hapus/{id}', 'SupplierController@hapusSupplier');
+            $router->post('', 'SupplierController@tambahSupplier');
+            $router->put('{id}', 'SupplierController@ubahSupplier');
+            $router->delete('{id}', 'SupplierController@hapusSupplier');
 
         });
 
