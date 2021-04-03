@@ -144,7 +144,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'toko'], function () use ($router){
             $router->get('', 'TokoController@ambilToko');
-            $router->put('ubah/{id}', 'TokoController@ubahToko');
+            $router->put('{id}', 'TokoController@ubahToko');
         });
 
 
