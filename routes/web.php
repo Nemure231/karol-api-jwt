@@ -153,6 +153,11 @@ $router->group(['prefix' => 'api'], function () use ($router){
                 $router->get('', 'KodeBarangController@ambilKodeBarang');
                 $router->put('{id}', 'KodeBarangController@ubahKodeBarang');
             });
+
+            $router->group(['prefix' => 'transaksi'], function () use ($router){
+                $router->get('', 'KodeTransaksiController@ambilKodeTransaksi');
+                $router->put('{id}', 'KodeTransaksiController@ubahKodeTransaksi');
+            });
             
         });
 
