@@ -33,14 +33,15 @@ $router->group(['prefix' => 'api'], function () use ($router){
 
         $router->group(['prefix' => 'profil'], function () use ($router){
             $router->get('{id}', 'UserController@ambilSatuUser');
+            $router->put('{id}', 'UserController@ubahUser');
+            
             $router->get('untuk-profil/{id}', 'UserController@ambilSatuUserUntukProfil');
             $router->get('dengan-role/{id}', 'UserController@ambilSatuUserJoinRole');
-            $router->put('ubah/{id}', 'UserController@ubahUser');
         });
 
         $router->group(['prefix' => 'sandi'], function () use ($router){
             $router->get('{id}', 'UserController@ambilSatuSandi');
-            $router->put('ubah/{id}', 'UserController@ubahSandi');
+            $router->put('{id}', 'UserController@ubahSandi');
         });
 
 
