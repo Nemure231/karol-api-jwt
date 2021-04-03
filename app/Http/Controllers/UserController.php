@@ -173,13 +173,13 @@ class UserController extends Controller
     public function ubahSandi(Request $request, $id){
 
         $validator = Validator::make($request->all(), [
-            'sandi_lama' =>  'required',
-            'sandi_baru' => 'required|min:8|confirmed',
+            'password_lama' =>  'required',
+            'password' => 'required|min:8|confirmed',
         ],[
-            'sandi_lama.required' => 'Harus diisi!',
-            'sandi_baru.required' => 'Harus diisi',
-            'sandi_baru.min' => 'Terlalu pendek!',
-            'sandi_baru.confirmed' => 'Konfirmasi sandi harus sama dengan sandi baru!'
+            'password_lama.required' => 'Harus diisi!',
+            'password.required' => 'Harus diisi',
+            'password.min' => 'Terlalu pendek!',
+            'password.confirmed' => 'Konfirmasi sandi harus sama dengan sandi baru!'
         ]);
 
         if ($validator->fails()) {
@@ -187,16 +187,16 @@ class UserController extends Controller
                 'success' => false,
                 'message' => 'Menu gagal diubah!',
                 'data' => [
-                    'sandi_lama' => $validator->errors()->first('sandi_lama'),
-                    'sandi_baru' => $validator->errors()->first('sandi_baru'),
+                    'password_lama' => $validator->errors()->first('password_lama'),
+                    'password' => $validator->errors()->first('password'),
                 ]
                 
             ], 422);
         }
       
 		$sandi = User::find($id);
-		$sandi_lama = $request->input('sandi_lama');
-		$sandi_baru = $request->input('sandi_baru');
+		$sandi_lama = $request->input('password_lama');
+		$sandi_baru = $request->input('password');
 
 		if (!password_verify($sandi_lama, $sandi['password'])) {
                 return response()->json([
@@ -214,7 +214,6 @@ class UserController extends Controller
 
 			}else{
                 $sandi_hash = Hash::make($sandi_baru);
-
                 $model = User::find($id);
                 $model->password = $sandi_hash;
                 $model->save();
