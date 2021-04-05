@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 
-
 use Illuminate\Http\Request;
-use App\Models\Merek;
+use App\Models\BarangMasuk;
 use Illuminate\Support\Facades\Validator;
 
-class MerekController extends Controller
+class BarangMasukController extends Controller
 {
      /**
      * Instantiate a new UserController instance.
@@ -19,11 +18,6 @@ class MerekController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Get the authenticated User.
-     *
-     * @return Response
-     */
 
     public function ambilMerek(){
 

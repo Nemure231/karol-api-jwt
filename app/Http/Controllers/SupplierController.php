@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Models\Supplier;
 use Illuminate\Support\Facades\Validator;
@@ -44,7 +44,6 @@ class SupplierController extends Controller
                     'data' => ''
             ], 404);
         }
-
 
     }
 

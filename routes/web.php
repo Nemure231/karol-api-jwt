@@ -100,6 +100,9 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->put('{id}', 'BarangController@ubahBarang');
             $router->delete('{id}', 'BarangController@hapusBarang');
 
+            $router->get('untuk-barang-masuk', 'BarangController@ambilBarangUntukBarangMasuk');
+            $router->post('tambah/dari-barang-masuk', 'BarangController@tambahBarangUntukBarangMasuk');
+
         });
 
         $router->group(['prefix' => 'kategori'], function () use ($router){

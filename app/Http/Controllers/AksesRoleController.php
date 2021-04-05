@@ -2,12 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\AksesRole;
 use App\Models\Menu;
 use lluminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 
 class AksesRoleController extends Controller
 {

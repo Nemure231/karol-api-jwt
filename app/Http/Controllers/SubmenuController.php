@@ -2,13 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use App\Models\Submenu;
 use App\Models\Menu;
 use App\Models\MenuUtama;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\Hash;
 
 class SubmenuController extends Controller
 {
