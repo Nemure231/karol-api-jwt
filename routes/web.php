@@ -100,8 +100,15 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->put('{id}', 'BarangController@ubahBarang');
             $router->delete('{id}', 'BarangController@hapusBarang');
 
-            $router->get('untuk-barang-masuk', 'BarangController@ambilBarangUntukBarangMasuk');
-            $router->post('tambah/dari-barang-masuk', 'BarangController@tambahBarangUntukBarangMasuk');
+        });
+
+        $router->group(['prefix' => 'barang_masuk'], function () use ($router){
+            $router->get('untuk-barang-masuk', 'BarangMasukController@ambilBarangUntukBarangMasuk');
+            $router->get('ambil-barang-dan-supplier', 'BarangMasukController@ambilDetailBarangDanSupplier');
+            $router->get('ambil-harga/{id}', 'BarangMasukController@ambilHargaUntukBarangMasuk');
+            $router->post('tambah/dari-barang-masuk', 'BarangMasukController@tambahBarangUntukBarangMasuk');
+
+            
 
         });
 
