@@ -107,6 +107,7 @@ $router->group(['prefix' => 'api'], function () use ($router){
             $router->get('ambil-barang-dan-supplier', 'BarangMasukController@ambilDetailBarangDanSupplier');
             $router->get('ambil-harga/{id}', 'BarangMasukController@ambilHargaUntukBarangMasuk');
             $router->post('tambah/dari-barang-masuk', 'BarangMasukController@tambahBarangUntukBarangMasuk');
+            $router->post('', 'BarangMasukController@tambahBarangMasuk');
 
             
 

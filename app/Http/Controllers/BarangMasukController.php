@@ -10,6 +10,7 @@ use App\Models\Merek;
 use App\Models\Kategori;
 use App\Models\KodeBarang;
 use App\Models\Supplier;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
 class BarangMasukController extends Controller
@@ -76,7 +77,6 @@ class BarangMasukController extends Controller
 
     }
 
-      //////////////////////////////////BARANG MASUK/////////////////////////////////
 
       public function ambilBarangUntukBarangMasuk(){
         $data = Barang::select('id_barang', 'nama_barang')->get();
@@ -191,6 +191,66 @@ class BarangMasukController extends Controller
         $model->harga_anggota = 0;
         $model->stok_barang = 0;
         $model->save();
+
+        if($model){
+            return response()->json([
+                'success' => true,
+                'message' => 'Barang berhasil ditambahkan!',
+                'data' => ''
+            ], 201);
+        }
+        if(!$model){
+            return response()->json([
+                'success' => false,
+                'message' => 'Barang gagal ditambahkan!',
+                'data' => '',
+            ], 400);
+        }
+    }
+
+    public function tambahBarangMasuk(Request $request){
+
+        // $validator = Validator::make($request->all(), [
+        //     'barang_id' => 'required',
+        //     'supplier_id' => 'required',
+        //     'kuantitas' => 'required|numeric',
+        //     'harga_pokok' => 'required|numeric'
+
+        // ],[
+        //     'barang_id.required' => 'Barang harus dipilih!',
+        //     'supplier_id.required' => 'Supplier harus dipilih!',
+        //     'kuantitas.required' => 'Kuantitas harus diisi!',
+        //     'kuantitas.numeric' => 'Kuantitas harus angka!',
+        //     'harga_pokok.required' => 'Harga pokok harus diisi!',
+        //     'harga_pokok.numeric' => 'Harga pokok harus angka!'
+        // ]);
+
+        // if ($validator->fails()) {
+        //     return response()->json([
+        //         'success' => false,
+        //         'message' => 'Barang gagal ditambahkan!',
+        //         'data' => [
+        //             'barang_id' => $validator->errors(),
+        //             'supplier_id' => $validator->errors()->first('supplier_id'),
+        //             'kuantitas' => $validator->errors()->first('kuantitas'),
+        //             'harga_pokok' => $validator->errors()->first('harga_pokok'),
+        //         ]
+        //     ], 422);
+        // }
+
+        for ($i= 0; $i < count($request->input('barang_id')); $i++ ){
+            $data[] = array(
+                'barang_id' => $request->input('barang_id')[$i],
+                'supplier_id' => $request->input('supplier_id')[$i],
+                'kuantitas' => $request->input('kuantitas')[$i],
+                'harga_pokok' => $request->input('harga_pokok')[$i],
+                'total_harga_pokok' => ($request->input('harga_pokok')[$i] * $request->input('kuantitas')[$i]),
+                'tanggal' => date('Y-m-d H:i:s')
+            );
+        }
+
+        $model = BarangMasuk::insert($data);
+        
 
         if($model){
             return response()->json([
