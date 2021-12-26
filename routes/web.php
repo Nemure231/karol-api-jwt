@@ -29,7 +29,7 @@ $router->get('/', function () use ($router) {
     </style>
     </head>
     <body>
-    
+    Tangkap data pada endpoint menggunakan aplikasi postman
     <table style="width:100%">
       <tr>
         <th rowspan="3">Method</th>
