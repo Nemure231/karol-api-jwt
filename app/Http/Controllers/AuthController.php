@@ -102,30 +102,30 @@ class AuthController extends Controller
 
     public function me()
     {
-        // response()->json(auth()->user());
-        $id = auth()->user()->id;
-        $data =  User::select('id', 'name', 'telepon', 'email', 'gambar', 'alamat', 'nama_role')
-        ->join('role', 'users.role_id', '=', 'role.id_role')
-        ->where('id', $id)
-        ->first();
+        return response()->json(auth()->user());
+        // $id = auth()->user()->id;
+        // $data =  User::select('id', 'name', 'telepon', 'email', 'gambar', 'alamat', 'nama_role')
+        // ->join('role', 'users.role_id', '=', 'role.id_role')
+        // ->where('id', $id)
+        // ->first();
 
-        $result = data_fill($data, 'url_gambar', asset('gambar/public').'/'.$data['gambar']);
+        // $result = data_fill($data, 'url_gambar', asset('gambar/public').'/'.$data['gambar']);
 
-        if($data){
-            return response()->json([
-                    'success' => true,
-                    'message' => 'User barhasil ditemukan!',
-                    'data' => $result
-            ], 200);
-        }
+        // if($data){
+        //     return response()->json([
+        //             'success' => true,
+        //             'message' => 'User barhasil ditemukan!',
+        //             'data' => $result
+        //     ], 200);
+        // }
 
-        if(!$data){
-            return response()->json([
-                    'success' => false,
-                    'message' => 'User gagal ditemukan!',
-                    'data' => ''
-            ], 404);
-        }
+        // if(!$data){
+        //     return response()->json([
+        //             'success' => false,
+        //             'message' => 'User gagal ditemukan!',
+        //             'data' => ''
+        //     ], 404);
+        // }
 
 
     }
