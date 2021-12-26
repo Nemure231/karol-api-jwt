@@ -59,7 +59,7 @@ $router->get('/', function () use ($router) {
       </tr>
       <tr>
       
-        <td>password_confirmed</td>
+        <td>password_confirmation</td>
       </tr>
       
       
@@ -124,7 +124,7 @@ $router->get('/', function () use ($router) {
       </tr>
       <tr>
        
-        <td>password_confirmed</td>
+        <td>password_confirmation</td>
       </tr>
      
      
