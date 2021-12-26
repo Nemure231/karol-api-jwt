@@ -40,8 +40,8 @@ $router->get('/', function () use ($router) {
       <tr>
       </tr>
       <tr>
-          <th>key</th>
-        <th>token</th>
+          <th>Key</th>
+        <th>Bearer token</th>
       </tr>
       <tr>
           <td rowspan="4">POST</td>
