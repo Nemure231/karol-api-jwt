@@ -16,7 +16,128 @@
 //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC8xMjcuMC4wLjE6ODAwMFwvYXBpXC9sb2dpbiIsImlhdCI6MTYxNDMyMTE1MiwiZXhwIjoxNjE0MzI0NzUyLCJuYmYiOjE2MTQzMjExNTIsImp0aSI6IkpTdG1Ickw2a3lPZTNmN3EiLCJzdWIiOjEsInBydiI6IjIzYmQ1Yzg5NDlmNjAwYWRiMzllNzAxYzQwMDg3MmRiN2E1OTc2ZjcifQ.BnDofwMQgM4ekrfkrHvHdSZ8rqtTmPZqBGK1-6P_Kq0
 
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    // return $router->app->version();
+    return '
+    <!DOCTYPE html>
+    <html>
+    <head>
+    <style>
+    table, th, td {
+      border: 1px solid black;
+      border-collapse: collapse;
+    }
+    </style>
+    </head>
+    <body>
+    
+    <table style="width:100%">
+      <tr>
+        <th rowspan="3">Method</th>
+        <th rowspan="3">EndPoints</th>
+        <th colspan="2" rowspan="2">Form</th>
+        <th rowspan="3">Usage</th>
+      </tr>
+      <tr>
+      </tr>
+      <tr>
+          <th>key</th>
+        <th>token</th>
+      </tr>
+      <tr>
+          <td rowspan="4">POST</td>
+        <td rowspan="4">/api/auth/register</td>
+        <td>name</td>
+        <td rowspan="4">No</td>
+        <td rowspan="4">Untuk registrasi</td>
+      </tr>
+      <tr>
+        <td>email</td>
+      </tr>
+      <tr>
+       
+        <td>password</td>
+      </tr>
+      <tr>
+      
+        <td>password_confirmed</td>
+      </tr>
+      
+      
+      <tr>
+          <td rowspan="2">POST</td>
+        <td rowspan="2">/api/auth/login</td>
+        <td>email</td>
+        <td rowspan="2">No</td>
+        <td rowspan="2">Untuk login dan mendapatkan token</td>
+      </tr>
+      <tr>
+        <td>password</td>
+      </tr>
+      
+      
+       <tr>
+          <td rowspan="1">GET</td>
+        <td rowspan="1">/api/auth/me</td>
+        <td></td>
+        <td rowspan="1">Yes</td>
+        <td rowspan="1">Mendapatkan informasi Anda</td>
+      </tr>
+      
+       <tr>
+          <td rowspan="1">POST</td>
+        <td rowspan="1">/api/auth/logout</td>
+        <td></td>
+        <td rowspan="1">Yes</td>
+        <td rowspan="1">Untuk keluar dari akun</td>
+      </tr>
+      
+      
+      
+       <tr>
+          <td rowspan="3">PUT</td>
+        <td rowspan="3">/api/profil/{id}</td>
+        <td>name</td>
+        <td rowspan="3">Yes</td>
+        <td rowspan="3">Mengubah user, parameter {id} pada Endpoint dapat dilihat saat Anda melihat informasi akun Anda.</td>
+      </tr>
+      <tr>
+        <td>telepon</td>
+      </tr>
+      <tr>
+       
+        <td>alamat</td>
+      </tr>
+      
+     
+     
+     
+     
+     <tr>
+          <td rowspan="3">PUT</td>
+        <td rowspan="3">/api/sandi/{id}</td>
+        <td>password_lama</td>
+        <td rowspan="3">Yes</td>
+        <td rowspan="3">Mengubah sandi, parameter {id} pada Endpoint dapat dilihat saat Anda melihat informasi akun Anda. Key password_lama adalah sandi sebelumnya yang harus anda input, sedangkan password sandi baru anda.</td>
+      </tr>
+      <tr>
+        <td>password</td>
+      </tr>
+      <tr>
+       
+        <td>password_confirmed</td>
+      </tr>
+     
+     
+      
+     
+     
+    </table>
+    </body>
+    </html>
+    
+    
+    
+    ';
 });
 
 

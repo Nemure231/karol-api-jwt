@@ -45,11 +45,11 @@ class AuthController extends Controller
             'name' => $request->input('name'),
             'email' => $request->input('email'),
             'password' => Hash::make($request->input('password')),
-            'telepon' => $request->input('telepon'),
-            'alamat' => $request->input('alamat'),
-            'gambar' => $request->input('gambar'),
-            'role_id' => $request->input('role_id'),
-            'status' => $request->input('status')
+            'telepon' => '',
+            'alamat' => '',
+            'gambar' => 'default.png',
+            'role_id' => 1,
+            'status' => 1
         ]);
         //melakukan kondisi jika user berhasil terdaftar
         if($register){
@@ -92,15 +92,32 @@ class AuthController extends Controller
     }
 
 
-
-
-
-
-    
-
     public function me()
     {
-        return response()->json(auth()->user());
+        // response()->json(auth()->user());
+        $id = auth()->user()->id;
+        $data =  User::select('id', 'name', 'telepon', 'email', 'gambar', 'alamat', 'nama_role')
+        ->join('role', 'users.role_id', '=', 'role.id_role')
+        ->where('id', $id)
+        ->first();
+
+        $result = data_fill($data, 'url_gambar', asset('gambar/public').'/'.$data['gambar']);
+
+        if($data){
+            return response()->json([
+                    'success' => true,
+                    'message' => 'User barhasil ditemukan!',
+                    'data' => $result
+            ], 200);
+        }
+
+        if(!$data){
+            return response()->json([
+                    'success' => false,
+                    'message' => 'User gagal ditemukan!',
+                    'data' => ''
+            ], 404);
+        }
     }
 
     public function ambil_token(){

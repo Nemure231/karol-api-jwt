@@ -111,20 +111,23 @@ class UserController extends Controller
             'telepon.required' => 'Harus diisi!',
             'telepon.numeric' => 'Harus angka!',
             'alamat.required' => 'Harus diisi!',
+           
         ]);
 
         if ($validator->fails()) {
             return response()->json([
                 'success' => false,
-                'message' => 'Menu gagal diubah!',
+                'message' => 'User gagal diubah!',
                 'data' => [
                     'name' => $validator->errors()->first('name'),
                     'telepon' => $validator->errors()->first('telepon'),
-                    'alamat' => $validator->errors()->first('alamat')
+                    'alamat' => $validator->errors()->first('alamat'),
                 ]
                 
             ], 422);
         }
+
+       
 
         $model = User::find($id);
         $model->name = $request->input('name');
