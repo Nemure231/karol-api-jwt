@@ -56,8 +56,16 @@ class AuthController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Registrasi berhasil!',
-                'data' => $register
+                'data' => ''
             ], 201);
+        }
+
+        if(!$register){
+            return response()->json([
+                'success' => false,
+                'message' => 'Registrasi gagai!',
+                'data' => '',
+            ], 400);
         }
     
     }
@@ -118,6 +126,8 @@ class AuthController extends Controller
                     'data' => ''
             ], 404);
         }
+
+
     }
 
     public function ambil_token(){
